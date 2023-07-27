@@ -1,0 +1,29 @@
+{
+	"WUTC": {
+		"Attributes": {
+			"ac": "Armor Class",
+			"attack": "Attack Bonus",
+			"hd": "Hit Dice"
+		},
+		"Characteristics": {
+			"str": "Strength",
+			"agi": "Agility",
+			"con": "Constitution"
+		},
+		"Saves": {
+			"dodging": "Dodging",
+			"physique": "Physique",
+			"warding": "Warding"
+		},
+
+		"Add": "Add",
+		"Difficulty": "Difficulty",
+		"Modifiers": "Modifiers",
+		"RollDialog": "Roll",
+
+		"EffectCreate": "Create Effect",
+		"EffectToggle": "Toggle Effect",
+		"EffectEdit": "Edit Effect",
+		"EffectDelete": "Delete Effect"
+	}
+}

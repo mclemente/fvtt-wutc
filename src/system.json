@@ -1,0 +1,44 @@
+{
+	"id": "wutc",
+	"title": "Wolves Upon the Coast",
+	"description": "The Wolves Upon the Coast system for FoundryVTT!",
+	"authors": [
+		{
+			"name": "Matheus Clemente",
+			"discord": "mclemente#5524"
+		}
+	],
+	"url": "This is auto replaced",
+	"license": "MIT",
+	"readme": "<optionally the URL to your readme>",
+	"bugs": "<optionally the URL to your issue list>",
+	"changelog": "<optionally the URL to your changelog>",
+	"version": "This is auto replaced",
+	"compatibility": {
+		"minimum": "11",
+		"verified": "11"
+	},
+	"esmodules": ["module/wutc.js"],
+	"styles": ["styles/wutc.css"],
+	"packs": [],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		}
+	],
+	"relationships": {
+		"requires": [],
+		"conflicts": []
+	},
+	"socket": false,
+	"manifest": "This is auto replaced",
+	"download": "This is auto replaced",
+	"background": "<optionally a relative filepath to a background image to use for worlds created with this system>",
+	"initiative": "1d10",
+	"gridDistance": 1,
+	"gridUnits": "sq",
+	"primaryTokenAttribute": "<optionally the attribute to use as primary resource in tokens by default>",
+	"secondaryTokenAttribute": "<optionally the attribute to use as secondary resource in tokens by default>"
+}
