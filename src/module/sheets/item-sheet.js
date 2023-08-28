@@ -16,12 +16,13 @@ export class ItemSheetWUTC extends ItemSheet {
 	/** @override */
 	get template() {
 		const path = "systems/wutc/templates/item";
-		// Return a single sheet for all item types.
-		// return `${path}/item-sheet.html`;
+		if (!game.user.isGM && this.actor.limited) {
+			return `${path}/limited-sheet.html`;
+		}
 
 		// Alternatively, you could use the following return statement to do a
 		// unique item sheet by type, like `weapon-sheet.html`.
-		return `${path}/item-${this.item.type}-sheet.html`;
+		return `${path}/${this.item.type}-sheet.html`;
 	}
 
 	/* -------------------------------------------- */
@@ -44,6 +45,7 @@ export class ItemSheetWUTC extends ItemSheet {
 		// Add the actor's data to context.data for easier access, as well as flags.
 		context.system = itemData.system;
 		context.flags = itemData.flags;
+		context.config = CONFIG.WUTC;
 
 		return context;
 	}

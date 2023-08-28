@@ -12,6 +12,29 @@ export default class WUTCItem extends Item {
 		super.prepareData();
 	}
 
+	prepareDerivedData() {
+		if (this.type === "weapon") {
+			this._prepareWeaponFormula();
+		}
+	}
+
+	_prepareWeaponFormula() {
+		const type = this.system.type;
+		if (!type) return;
+
+		switch (type) {
+			case "light":
+				this.system.formula = "2d6kl";
+				break;
+			case "heavy":
+				this.system.formula = "2d6kh";
+				break;
+			case "medium":
+			default:
+				this.system.formula = "1d6";
+		}
+	}
+
 	/**
 	 * Prepare a data object which is passed to any Roll formulas which are created related to this Item
 	 * @private

@@ -1,5 +1,22 @@
 {
+	"TYPES": {
+		"Actor": {
+			"character": "Player Character",
+			"npc": "NPC",
+			"ship": "Ship",
+			"container": "Container"
+		},
+		"Item": {
+			"armor": "Armor",
+			"equipment": "Equipment",
+			"spell": "Spell",
+			"trait": "Trait",
+			"weapon": "Weapon"
+		}
+	},
 	"WUTC": {
+		"AC": "AC",
+		"ArmorClass": "Armor Class",
 		"Attributes": {
 			"ac": "Armor Class",
 			"attack": "Attack Bonus",
@@ -16,14 +33,39 @@
 			"warding": "Warding"
 		},
 
+		"Armor": {
+			"Light": "Light",
+			"Medium": "Medium",
+			"Heavy": "Heavy",
+			"Shield": "Shield"
+		},
+
+		"Weapon": {
+			"Light": "Light",
+			"Medium": "Medium",
+			"Heavy": "Heavy"
+		},
+
 		"Add": "Add",
 		"Difficulty": "Difficulty",
 		"Modifiers": "Modifiers",
 		"RollDialog": "Roll",
+		"RollFormula": "Roll Formula",
 
 		"EffectCreate": "Create Effect",
 		"EffectToggle": "Toggle Effect",
 		"EffectEdit": "Edit Effect",
-		"EffectDelete": "Delete Effect"
+		"EffectDelete": "Delete Effect",
+
+		"New": "New",
+		"NewItem": "{new} {item}",
+
+		"ArmorPl": "Armors",
+		"Equipment": "Equipment",
+		"WeaponPl": "Weapons",
+
+		"Weight": "Weight",
+
+		"Type": "Type"
 	}
 }

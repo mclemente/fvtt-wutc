@@ -1,5 +1,5 @@
 <form autocomplete="off">
-	{{#if isTestRoll}}
+	{{#if (eq rollType "test")}}
 		<fieldset class="flexrow">
 			<legend>{{localize "WUTC.Difficulty"}}</legend>
 			<input type="radio" id="2d6" name="difficulty" value="2" data-dtype="Number" checked />
@@ -12,10 +12,16 @@
 			<label for="5d6">5d6</label>
 		</fieldset>
 	{{/if}}
+	<div class="form-group">
+		<input style="display: none;" type="text" name="bonus" value="{{attribute.bonus}}" data-dtype="Number" />
+	</div>
+	<div class="form-group">
+		<input style="display: none;" type="text" name="penalty" value="{{attribute.penalty}}" data-dtype="Number" />
+	</div>
 	<fieldset>
 		<div class="form-group">
 			<label>{{localize "WUTC.Modifiers"}}</label>
-			<input type="text" name="bonus" value="" placeholder="0" />
+			<input type="text" name="additionalBonus" value="" placeholder="0" />
 		</div>
 	</fieldset>
 	<footer class="flexrow">

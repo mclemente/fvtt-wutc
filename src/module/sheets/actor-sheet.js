@@ -9,7 +9,6 @@ export class ActorSheetWUTC extends ActorSheet {
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			classes: ["wutc", "sheet", "actor"],
-			template: "systems/wutc/templates/actor/actor-sheet.html",
 			width: 600,
 			height: 600,
 			tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }],
@@ -18,10 +17,11 @@ export class ActorSheetWUTC extends ActorSheet {
 
 	/** @override */
 	get template() {
-		// if (!game.user.isGM && this.actor.limited) {
-		// 	return `systems/wutc/templates/actor/actor-${this.actor.type}-limited-sheet.html`;
-		// }
-		return `systems/wutc/templates/actor/actor-${this.actor.type}-sheet.html`;
+		const path = "systems/wutc/templates/actor";
+		if (!game.user.isGM && this.actor.limited) {
+			return `${path}/limited-sheet.html`;
+		}
+		return `${path}/${this.actor.type}-sheet.html`;
 	}
 
 	/* -------------------------------------------- */
@@ -42,15 +42,14 @@ export class ActorSheetWUTC extends ActorSheet {
 		context.flags = actorData.flags;
 
 		// Prepare character data and items.
+		this._prepareItems(context);
 		if (actorData.type == "character") {
-			this._prepareItems(context);
 			this._prepareCharacterData(context);
 		}
 
 		// Prepare NPC data and items.
-		if (actorData.type == "npc") {
-			this._prepareItems(context);
-		}
+		// if (actorData.type == "npc") {
+		// }
 
 		// Add roll data for TinyMCE editors.
 		context.rollData = context.actor.getRollData();
@@ -82,41 +81,49 @@ export class ActorSheetWUTC extends ActorSheet {
 	 */
 	_prepareItems(context) {
 		// Initialize containers.
-		const gear = [];
-		const features = [];
-		const spells = {
-			0: [],
-			1: [],
-			2: [],
-			3: [],
-			4: [],
-			5: [],
-			6: [],
-			7: [],
-			8: [],
-			9: [],
+		const gear = {
+			weapon: {
+				label: game.i18n.localize("WUTC.WeaponPl"),
+				items: [],
+				attr: game.i18n.localize("WUTC.RollFormula"),
+				dataset: "weapon",
+			},
+			equipment: {
+				label: game.i18n.localize("WUTC.Equipment"),
+				items: [],
+				attr: game.i18n.localize("WUTC.RollFormula"),
+				dataset: "equipment",
+			},
+			armor: {
+				label: game.i18n.localize("WUTC.ArmorPl"),
+				items: [],
+				attr: game.i18n.localize("WUTC.ArmorClass"),
+				dataset: "armor",
+			},
 		};
+		const features = [];
+		const spells = [];
 
 		// Iterate through items, allocating to containers
 		for (let i of context.items) {
 			i.img = i.img || DEFAULT_TOKEN;
 			// Append to gear.
-			if (i.type === "item") {
-				gear.push(i);
+			if (["armor", "equipment", "weapon"].includes(i.type)) {
+				gear[i.type].items.push(i);
 			}
 			// Append to features.
-			else if (i.type === "feature") {
+			else if (i.type === "trait") {
 				features.push(i);
 			}
 			// Append to spells.
 			else if (i.type === "spell") {
-				if (i.system.spellLevel != undefined) {
-					spells[i.system.spellLevel].push(i);
-				}
+				spells.push(i);
 			}
 		}
 
 		// Assign and return
+		const encumbrance = context.system.attributes.encumbrance;
+		encumbrance.diff = encumbrance.max - encumbrance.value;
 		context.gear = gear;
 		context.features = features;
 		context.spells = spells;
@@ -141,6 +148,20 @@ export class ActorSheetWUTC extends ActorSheet {
 
 		// Add Inventory Item
 		html.find(".item-create").click(this._onItemCreate.bind(this));
+
+		html.find(".item-toggle").click((ev) => {
+			ev.preventDefault();
+			const li = $(ev.currentTarget).parents(".item");
+			const item = this.actor.items.get(li.data("itemId"));
+			return item.update({ ["system.equipped"]: !foundry.utils.getProperty(item, "system.equipped") });
+		});
+
+		html.find(".item-weight").click((ev) => {
+			ev.preventDefault();
+			const li = $(ev.currentTarget).parents(".item");
+			const item = this.actor.items.get(li.data("itemId"));
+			return item.update({ ["system.ignoreWeight"]: !foundry.utils.getProperty(item, "system.ignoreWeight") });
+		});
 
 		// Delete Inventory Item
 		html.find(".item-delete").click((ev) => {
@@ -186,7 +207,10 @@ export class ActorSheetWUTC extends ActorSheet {
 		// Grab any data associated with this control.
 		const data = duplicate(header.dataset);
 		// Initialize a default name.
-		const name = `New ${type.capitalize()}`;
+		const name = game.i18n.format("WUTC.NewItem", {
+			new: game.i18n.localize("WUTC.New"),
+			item: type.capitalize(),
+		});
 		// Prepare the item object.
 		const itemData = {
 			name: name,

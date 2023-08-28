@@ -1,0 +1,65 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+	{{!-- Sheet Header --}}
+	<header class="sheet-header">
+		<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
+		<div class="header-fields">
+			<h1 class="charname">
+				<input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'Name' }}" />
+			</h1>
+			<div class="resources grid grid-1col">
+				<div class="resource flex-group-center">
+					<label for="system.attributes.encumbrance.value" class="resource-label">Encumbrance</label>
+					<div class="resource-content flexrow flex-center flex-between">
+						<!-- <input
+							type="text"
+							name="system.attributes.encumbrance.value"
+							value="{{system.attributes.encumbrance.value}}"
+							data-dtype="Number"
+							disabled
+						/>
+						<span> / </span> -->
+						<input
+							type="text"
+							name="system.attributes.encumbrance.max"
+							value="{{system.attributes.encumbrance.max}}"
+							data-dtype="Number"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	{{!-- Sheet Tab Navigation --}}
+	<nav class="sheet-tabs tabs" data-group="primary">
+		{{!-- Default tab is specified in actor-sheet.js --}}
+		<a class="item" data-tab="description">Description</a>
+		<a class="item" data-tab="notes">Notes</a>
+		<a class="item" data-tab="items">Items</a>
+		<!-- <a class="item" data-tab="effects">Effects</a> -->
+	</nav>
+
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
+		{{!-- Biography Tab --}}
+		<div class="tab biography" data-group="primary" data-tab="description">
+			{{editor system.biography target="system.biography" rollData=rollData button=true owner=owner
+			editable=editable}}
+		</div>
+
+		<div class="tab notes" data-group="primary" data-tab="notes">
+			{{editor system.notes target="system.biography" rollData=rollData button=true owner=owner
+			editable=editable}}
+		</div>
+
+		{{!-- Owned Items Tab --}}
+		<div class="tab items" data-group="primary" data-tab="items">
+			{{> "systems/wutc/templates/actor/parts/actor-items.html"}}
+		</div>
+
+		{{!-- Active Effects Tab --}}
+		<div class="tab effects flexcol" data-group="primary" data-tab="effects">
+			{{> "systems/wutc/templates/actor/parts/actor-effects.html"}}
+		</div>
+	</section>
+</form>

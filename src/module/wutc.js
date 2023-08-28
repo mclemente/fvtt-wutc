@@ -8,6 +8,7 @@ import { preloadHandlebarsTemplates } from "./helpers/templates.js";
 
 import * as dice from "./dice/_module.js";
 import * as documents from "./documents/_module.js";
+import * as utils from "./helpers/utils.js";
 
 /* -------------------------------------------- */
 /*  Define Module Structure                     */
@@ -58,23 +59,17 @@ Hooks.once("init", async () => {
 	return preloadHandlebarsTemplates();
 });
 
+Hooks.once("i18nInit", () => utils.performPreLocalization(CONFIG.WUTC));
+
 /* -------------------------------------------- */
 /*  Handlebars Helpers                          */
 /* -------------------------------------------- */
 
 // If you need to add Handlebars helpers, here are a few useful examples:
-Handlebars.registerHelper("concat", function () {
-	var outStr = "";
-	for (var arg in arguments) {
-		if (typeof arguments[arg] != "object") {
-			outStr += arguments[arg];
-		}
-	}
-	return outStr;
-});
-
-Handlebars.registerHelper("toLowerCase", function (str) {
-	return str.toLowerCase();
+Handlebars.registerHelper("times", function (n, block) {
+	let accum = "";
+	for (let i = 0; i < n; ++i) accum += block.fn(i);
+	return accum;
 });
 
 /* -------------------------------------------- */

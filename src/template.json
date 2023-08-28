@@ -5,7 +5,8 @@
 			"base": {
 				"attributes": {
 					"encumbrance": {
-						"value": null
+						"value": 0,
+						"max": 0
 					}
 				},
 				"biography": ""
@@ -81,7 +82,8 @@
 			}
 		},
 		"container": {
-			"templates": ["base"]
+			"templates": ["base"],
+			"notes": ""
 		},
 		"ship": {
 			"templates": ["base", "entity"],
@@ -101,24 +103,42 @@
 		}
 	},
 	"Item": {
-		"types": ["item", "feature", "spell"],
+		"types": ["armor", "equipment", "spell", "trait", "weapon"],
 		"templates": {
 			"base": {
 				"description": ""
+			},
+			"equippable": {
+				"equipped": false
+			},
+			"physical": {
+				"price": {
+					"value": 0
+				},
+				"quantity": 1
 			}
 		},
-		"item": {
-			"templates": ["base"],
-			"quantity": 1,
-			"weight": 0,
-			"formula": "d6"
+		"armor": {
+			"templates": ["base", "equippable", "physical"],
+			"armor": {
+				"value": 9,
+				"type": "light"
+			}
 		},
-		"feature": {
-			"templates": ["base"]
+		"equipment": {
+			"templates": ["base", "physical"],
+			"formula": "",
+			"weight": 1
 		},
 		"spell": {
-			"templates": ["base"],
-			"spellLevel": 1
+			"templates": ["base"]
+		},
+		"trait": {
+			"templates": ["base"]
+		},
+		"weapon": {
+			"templates": ["base", "physical"],
+			"type": "light"
 		}
 	}
 }
