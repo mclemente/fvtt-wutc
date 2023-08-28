@@ -115,7 +115,8 @@
 				"price": {
 					"value": 0
 				},
-				"quantity": 1
+				"quantity": 1,
+				"weight": 1
 			}
 		},
 		"armor": {
@@ -127,8 +128,7 @@
 		},
 		"equipment": {
 			"templates": ["base", "physical"],
-			"formula": "",
-			"weight": 1
+			"formula": ""
 		},
 		"spell": {
 			"templates": ["base"]
@@ -138,7 +138,8 @@
 		},
 		"weapon": {
 			"templates": ["base", "physical"],
-			"type": "light"
+			"formula": "1d6",
+			"type": "medium"
 		}
 	}
 }
