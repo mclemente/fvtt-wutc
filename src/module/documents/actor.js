@@ -32,7 +32,9 @@ export default class ActorWUTC extends Actor {
 	prepareDerivedData() {
 		this._prepareCharacterData();
 		this._prepareNpcData();
+
 		this._prepareArmorClass();
+		this._prepareAttackData();
 		this._prepareEncumbrance();
 		this._prepareSaves();
 	}
@@ -107,6 +109,14 @@ export default class ActorWUTC extends Actor {
 		ac.value = ac.base + (ac.shield ?? 0) + (ac.bonus ?? 0) + (ac.cover ?? 0);
 	}
 
+	_prepareAttackData() {
+		const attack = this.system.attributes.attack;
+		if (!attack) return;
+		if (this.system.characteristics.str.value >= 15) {
+			attack.value += 1;
+		}
+	}
+
 	_prepareEncumbrance() {
 		const encumbrance = this.system.attributes.encumbrance;
 		if (!encumbrance) return;
@@ -148,6 +158,13 @@ export default class ActorWUTC extends Actor {
 			saves.dodging.bonus += 2;
 		} else if (equippedArmor.system.armor.type === "heavy") {
 			saves.dodging.penalty -= 2;
+		}
+
+		if (this.system.characteristics.agi.value >= 15) {
+			saves.dodging.bonus += 1;
+		}
+		if (this.system.characteristics.con.value >= 15) {
+			saves.physique.bonus += 1;
 		}
 
 		if (this.type === "npc") {
