@@ -10,9 +10,6 @@
 	],
 	"url": "This is auto replaced",
 	"license": "MIT",
-	"readme": "<optionally the URL to your readme>",
-	"bugs": "<optionally the URL to your issue list>",
-	"changelog": "<optionally the URL to your changelog>",
 	"version": "This is auto replaced",
 	"compatibility": {
 		"minimum": "11",
@@ -32,13 +29,11 @@
 		"requires": [],
 		"conflicts": []
 	},
-	"socket": false,
 	"manifest": "This is auto replaced",
 	"download": "This is auto replaced",
-	"background": "<optionally a relative filepath to a background image to use for worlds created with this system>",
-	"initiative": "1d10",
+	"initiative": "1d10 - @attributes.ac.value",
 	"gridDistance": 1,
 	"gridUnits": "sq",
-	"primaryTokenAttribute": "<optionally the attribute to use as primary resource in tokens by default>",
+	"primaryTokenAttribute": "attributes.hp",
 	"secondaryTokenAttribute": "<optionally the attribute to use as secondary resource in tokens by default>"
 }

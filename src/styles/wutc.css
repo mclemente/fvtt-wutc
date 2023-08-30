@@ -470,3 +470,22 @@
 .wutc .effects .item .effect-controls {
 	border: none;
 }
+
+.wutc .warning {
+	background: rgba(0, 0, 0, 0.5);
+	margin-bottom: 0.5em;
+	padding: 6px 8px;
+	border: 1px solid var(--color-border-dark-secondary);
+	border-radius: 5px;
+	color: var(--color-text-light-1);
+	text-shadow: 1px 1px black;
+}
+
+.wutc .warning.red {
+	background: rgba(105, 0, 8, 0.8);
+	border: 1px solid var(--color-level-error);
+}
+
+.combat-sidebar li.combatant .token-initiative.rolled {
+	flex: 1;
+}

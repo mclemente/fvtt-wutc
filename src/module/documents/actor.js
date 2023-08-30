@@ -1,4 +1,4 @@
-import { RollDialog } from "../apps/RollDialog";
+import { WutcRollDialog } from "../apps/RollDialog";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -33,8 +33,10 @@ export default class ActorWUTC extends Actor {
 		this._prepareCharacterData();
 		this._prepareNpcData();
 
-		this._prepareArmorClass();
-		this._prepareAttackData();
+		if (this.type !== "npc") {
+			this._prepareArmorClass();
+		}
+
 		this._prepareEncumbrance();
 		this._prepareSaves();
 	}
@@ -44,6 +46,11 @@ export default class ActorWUTC extends Actor {
 	 */
 	_prepareCharacterData() {
 		if (this.type !== "character") return;
+		const attack = this.system.attributes.attack;
+		if (!attack) return;
+		if (this.system.characteristics.str.value >= 15) {
+			attack.value += 1;
+		}
 	}
 
 	/**
@@ -107,14 +114,6 @@ export default class ActorWUTC extends Actor {
 
 		// Compute total AC and return
 		ac.value = ac.base + (ac.shield ?? 0) + (ac.bonus ?? 0) + (ac.cover ?? 0);
-	}
-
-	_prepareAttackData() {
-		const attack = this.system.attributes.attack;
-		if (!attack) return;
-		if (this.system.characteristics.str.value >= 15) {
-			attack.value += 1;
-		}
 	}
 
 	_prepareEncumbrance() {
@@ -209,7 +208,7 @@ export default class ActorWUTC extends Actor {
 
 	async rollTest(key, event) {
 		const title = game.i18n.localize(`WUTC.Characteristics.${key}`) ?? "";
-		return new RollDialog({
+		return new WutcRollDialog({
 			title,
 			actor: this,
 			data: this.getRollData(),
@@ -221,12 +220,23 @@ export default class ActorWUTC extends Actor {
 
 	async rollSave(key, event) {
 		const title = game.i18n.localize(`WUTC.Saves.${key}`) ?? "";
-		return new RollDialog({
+		return new WutcRollDialog({
 			title,
 			actor: this,
 			data: this.getRollData(),
 			key,
 			rollType: "save",
+			event,
+		});
+	}
+
+	async rollMorale(event) {
+		const title = game.i18n.localize(`WUTC.MoraleCheck`) ?? "";
+		return new WutcRollDialog({
+			title,
+			actor: this,
+			data: this.getRollData(),
+			rollType: "morale",
 			event,
 		});
 	}

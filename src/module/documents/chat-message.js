@@ -9,8 +9,11 @@ export function highlightSuccessFailure(message, html, data) {
 	if (!rollResult) return;
 
 	// Highlight successes and failures
-	if (rollResult.isSuccess) html.find(".dice-total").addClass("success");
-	else html.find(".dice-total").addClass("failure");
+	if (rollResult.isSuccess) {
+		html.find(".dice-total").addClass("success");
+	} else {
+		html.find(".dice-total").addClass("failure");
+	}
 }
 
 export function onRenderChatMessage(app, html, data) {

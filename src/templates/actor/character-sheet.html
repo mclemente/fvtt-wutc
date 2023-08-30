@@ -26,25 +26,6 @@
 					</div>
 				</div>
 
-				<!-- <div class="resource flex-group-center">
-					<label for="system.attributes.power.value" class="resource-label">Power</label>
-					<div class="resource-content flexrow flex-center flex-between">
-						<input
-							type="text"
-							name="system.attributes.power.value"
-							value="{{system.attributes.power.value}}"
-							data-dtype="Number"
-						/>
-						<span> / </span>
-						<input
-							type="text"
-							name="system.attributes.power.max"
-							value="{{system.attributes.power.max}}"
-							data-dtype="Number"
-						/>
-					</div>
-				</div> -->
-
 				<div class="resource flex-group-center">
 					<label for="system.attributes.hd.value" class="resource-label">Hit Dice</label>
 					<div class="resource-content flexrow flex-center flex-between">
@@ -65,8 +46,13 @@
 		{{!-- Default tab is specified in actor-sheet.js --}}
 		<a class="item" data-tab="features">Features</a>
 		<a class="item" data-tab="items">Items</a>
+		{{#if spells.length}}
 		<a class="item" data-tab="spells">Spells</a>
+		{{/if}}
 		<a class="item" data-tab="description">Description</a>
+		{{#if (eq actor.type "npc")}}
+		<a class="item" data-tab="notes">Notes</a>
+		{{/if}}
 		<!-- <a class="item" data-tab="effects">Effects</a> -->
 	</nav>
 
@@ -103,11 +89,19 @@
 								for="system.saves.{{key}}.value"
 								class="resource-label rollable flexlarge align-left"
 								data-key="{{key}}"
-								>{{localize (concat "WUTC.Saves." key)}}</label
 							>
-							<span class="ability-mod rollable" data-roll="d20+@characteristics.{{key}}.mod"
-								>{{ability.value}}</span
-							>
+								{{localize (concat "WUTC.Saves." key)}}
+							</label>
+							{{#if (eq ../actor.type "character")}}
+							<span class="ability-mod rollable">{{ability.value}}</span>
+							{{else}}
+							<input
+								type="text"
+								name="system.saves.{{key}}.value"
+								value="{{ability.value}}"
+								data-dtype="Number"
+							/>
+							{{/if}}
 						</div>
 						{{/each}}
 					</div>
@@ -117,37 +111,85 @@
 							<label for="system.attributes.ac.value" class="resource-label flexlarge align-left"
 								>{{localize "WUTC.Attributes.ac"}}</label
 							>
+							{{#if (eq actor.type "character")}}
 							<span class="ability-mod">{{numberFormat system.attributes.ac.value}}</span>
+							{{else}}
+							<input
+								type="text"
+								name="system.attributes.ac.value"
+								value="{{system.attributes.ac.value}}"
+								data-dtype="Number"
+							/>
+							{{/if}}
 						</div>
+						<div class="attack flexrow flex-group-center">
+							<label for="system.attributes.attack.value" class="resource-label flexlarge align-left">
+								{{localize "WUTC.Attributes.attack"}}
+							</label>
+							{{#if (eq actor.type "character")}}
+							<span class="ability-mod rollable"
+								>{{numberFormat system.attributes.attack.value sign=true}}</span
+							>
+							{{else}}
+							<input
+								type="text"
+								name="system.attributes.attack.value"
+								value="{{system.attributes.attack.value}}"
+								data-dtype="Number"
+							/>
+							{{/if}}
+						</div>
+						{{#if (eq actor.type "npc")}}
 						<div class="ability flexrow flex-group-center">
 							<label
-								for="system.attributes.attack.value"
+								for="system.attributes.numOfAttacks.value"
 								class="resource-label flexlarge align-left"
-								data-roll="d20+@saves.{{key}}.mod"
-								>{{localize "WUTC.Attributes.attack"}}</label
+								>{{localize "WUTC.Attributes.numOfAttacks"}}</label
 							>
-							<span class="ability-mod">{{numberFormat system.attributes.attack.value sign=true}}</span>
+							<input
+								type="text"
+								name="system.attributes.numOfAttacks.value"
+								value="{{system.attributes.numOfAttacks.value}}"
+								data-dtype="Number"
+							/>
 						</div>
+						<!-- <div class="ability flexrow flex-group-center">
+							<label for="system.attributes.follower.leader" class="resource-label flexlarge align-left"
+								>{{localize "WUTC.Attributes.Leader"}}</label
+							>
+							{{#if system.attributes.follower.leader}}
+							<span class="ability-mod">{{system.attributes.follower.leader}}</span>
+							<a><i class="fas fa-trash"></i></a>
+							{{else}}
+							<span class="ability-mod"> - </span>{{/if}}
+						</div> -->
+						<div class="morale flexrow flex-group-center">
+							<button class="rollable">{{localize "WUTC.Morale"}}</button>
+						</div>
+						{{/if}}
 					</div>
 				</aside>
 
 				{{!-- For the main features list, span the right two columns --}}
 				<section class="main grid-span-2">
-					{{!-- This is a Handlebars partial. They're stored in the `/parts` folder next to this sheet, and
-					defined in module/helpers/templates.js --}} {{>
-					"systems/wutc/templates/actor/parts/actor-features.html"}}
+					{{> "systems/wutc/templates/actor/parts/actor-features.html"}}
 				</section>
 			</section>
 		</div>
 
 		{{!-- Biography Tab --}}
 		<div class="tab biography" data-group="primary" data-tab="description">
-			{{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll
-			data to the rollData property. --}} {{editor system.biography target="system.biography" rollData=rollData
-			button=true owner=owner editable=editable}}
+			{{editor system.biography target="system.biography" rollData=rollData button=true owner=owner
+			editable=editable}}
 		</div>
 
-		{{!-- Owned Items Tab --}}
+		{{#if (eq actor.type "npc")}}
+		<div class="tab notes" data-group="primary" data-tab="notes">
+			{{editor system.notes target="system.biography" rollData=rollData button=true owner=owner
+			editable=editable}}
+		</div>
+		{{/if}}
+
 		<div class="tab items" data-group="primary" data-tab="items">
 			{{> "systems/wutc/templates/actor/parts/actor-items.html"}}
 		</div>

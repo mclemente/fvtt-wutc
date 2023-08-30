@@ -21,6 +21,9 @@ export class ActorSheetWUTC extends ActorSheet {
 		if (!game.user.isGM && this.actor.limited) {
 			return `${path}/limited-sheet.html`;
 		}
+		if (this.actor.type === "npc") {
+			return `${path}/character-sheet.html`;
+		}
 		return `${path}/${this.actor.type}-sheet.html`;
 	}
 
@@ -181,7 +184,7 @@ export class ActorSheetWUTC extends ActorSheet {
 
 		html.find(".save .rollable").click(this._onRollSave.bind(this));
 
-		//TODO add attack roll
+		html.find(".morale .rollable").click(this._onMoraleCheck.bind(this));
 
 		// Drag events for macros.
 		if (this.actor.owner) {
@@ -224,6 +227,11 @@ export class ActorSheetWUTC extends ActorSheet {
 		return await Item.create(itemData, { parent: this.actor });
 	}
 
+	_onMoraleCheck(event) {
+		event.preventDefault();
+		this.actor.rollMorale({ event });
+	}
+
 	/**
 	 * Handle clickable rolls.
 	 * @param {Event} event   The originating click event
@@ -237,7 +245,7 @@ export class ActorSheetWUTC extends ActorSheet {
 		if (dataset.rollType == "item") {
 			const itemId = element.closest(".item").dataset.itemId;
 			const item = this.actor.items.get(itemId);
-			if (item) return item.roll();
+			if (item) return item.roll(event);
 		}
 	}
 

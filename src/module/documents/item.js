@@ -1,8 +1,11 @@
+import { WutcAttackDialog } from "../apps/RollDialog";
+import RollWUTC from "../dice/roll";
+
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
-export default class WUTCItem extends Item {
+export default class ItemWUTC extends Item {
 	/**
 	 * Augment the basic Item data model with additional dynamic data.
 	 */
@@ -53,7 +56,7 @@ export default class WUTCItem extends Item {
 	 * @param {Event} event   The originating click event
 	 * @private
 	 */
-	async roll() {
+	async roll(event) {
 		const item = this;
 
 		// Initialize chat data.
@@ -72,19 +75,45 @@ export default class WUTCItem extends Item {
 		}
 		// Otherwise, create a roll and send a chat message from it.
 		else {
-			// Retrieve roll data.
-			const rollData = this.getRollData();
+			let title = game.i18n.format(`WUTC.Attack`, { weapon: this.name }) ?? "";
+			const data = this.getRollData();
+			if (event.altKey || event.ctrlKey || event.shiftKey) {
+				event.preventDefault();
+				let term = "1d20";
+				let bonus = this.actor.system?.attributes?.attack?.value ?? 0;
+				const target = canvas.tokens.placeables.find((t) => t.id === game.user.targets.ids[0]) ?? "";
+				if (target && target.actor?.system.attributes.ac) {
+					title = game.i18n.format("WUTC.AttackAgainstTarget", { target: target.name });
+					bonus += target.actor.system.attributes.ac.value;
+					if (bonus) {
+						term += `+ ${bonus}`;
+					}
+				}
 
-			// Invoke the roll and submit it to chat.
-			const roll = new Roll(rollData.item.system.formula, rollData);
-			// If you need to store the value first, uncomment the next line.
-			// let result = await roll.roll({async: true});
-			roll.toMessage({
-				speaker: speaker,
-				rollMode: rollMode,
-				flavor: label,
+				const flags = {
+					wutc: {
+						rollType: "attack",
+					},
+				};
+				if (target?.id) {
+					flags.wutc.target = target.id;
+				}
+				mergeObject(flags, data.flags);
+				const roll = await new RollWUTC(term, data, {}).evaluate({ async: true });
+
+				return roll.toMessage({
+					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+					flavor: title,
+					rollMode: game.settings.get("core", "rollMode"),
+				});
+			}
+			return new WutcAttackDialog({
+				title,
+				actor: this,
+				data,
+				rollType: "attack",
+				event,
 			});
-			return roll;
 		}
 	}
 }

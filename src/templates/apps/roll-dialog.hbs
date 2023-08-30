@@ -1,24 +1,36 @@
 <form autocomplete="off">
-	{{#if (eq rollType "test")}}
-		<fieldset class="flexrow">
-			<legend>{{localize "WUTC.Difficulty"}}</legend>
-			<input type="radio" id="2d6" name="difficulty" value="2" data-dtype="Number" checked />
-			<label for="2d6">2d6</label>
-			<input type="radio" id="3d6" name="difficulty" value="3" data-dtype="Number" />
-			<label for="3d6">3d6</label>
-			<input type="radio" id="4d6" name="difficulty" value="4" data-dtype="Number" />
-			<label for="4d6">4d6</label>
-			<input type="radio" id="5d6" name="difficulty" value="5" data-dtype="Number" />
-			<label for="5d6">5d6</label>
-		</fieldset>
-	{{/if}}
+
 	<div class="form-group">
 		<input style="display: none;" type="text" name="bonus" value="{{attribute.bonus}}" data-dtype="Number" />
 	</div>
 	<div class="form-group">
 		<input style="display: none;" type="text" name="penalty" value="{{attribute.penalty}}" data-dtype="Number" />
 	</div>
+
 	<fieldset>
+		{{#if (eq rollType "test")}}
+			<div class="flexrow">
+				<legend>{{localize "WUTC.Difficulty"}}</legend>
+				<input type="radio" id="2d6" name="difficulty" value="2" data-dtype="Number" checked />
+				<label for="2d6">2d6</label>
+				<input type="radio" id="3d6" name="difficulty" value="3" data-dtype="Number" />
+				<label for="3d6">3d6</label>
+				<input type="radio" id="4d6" name="difficulty" value="4" data-dtype="Number" />
+				<label for="4d6">4d6</label>
+				<input type="radio" id="5d6" name="difficulty" value="5" data-dtype="Number" />
+				<label for="5d6">5d6</label>
+			</div>
+			<hr />
+		{{else if (and (eq rollType "attack") (gt attribute.targets.length 0))}}
+			<div class="form-group">
+				<label>{{localize "WUTC.Target"}}</label>
+				<select name="target">
+					{{selectOptions attribute.targets nameAttr="id" labelAttr="name"}}
+				</select>
+			</div>
+		{{else if (and (eq rollType "attack") (not attribute.targets.length))}}
+			<div class="warning red">{{localize "WUTC.WarningAttackNoTargets"}}</div>
+		{{/if}}
 		<div class="form-group">
 			<label>{{localize "WUTC.Modifiers"}}</label>
 			<input type="text" name="additionalBonus" value="" placeholder="0" />

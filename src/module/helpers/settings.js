@@ -11,4 +11,12 @@ export function registerSettings() {
 		type: String,
 		default: "",
 	});
+
+	game.settings.register("wutc", "autoInit", {
+		name: "WUTC.Settings.autoInit",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: true,
+	});
 }

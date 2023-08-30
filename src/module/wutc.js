@@ -1,6 +1,7 @@
 // Import sheet classes.
 import { ActorSheetWUTC } from "./sheets/actor-sheet.js";
 import { ItemSheetWUTC } from "./sheets/item-sheet.js";
+import { default as CombatTrackerWUTC } from "./sidebar/combat-tracker.js";
 // Import helper/utility classes and constants.
 import { WUTC } from "./helpers/config.js";
 import { registerSettings } from "./helpers/settings.js";
@@ -38,13 +39,16 @@ Hooks.once("init", async () => {
 	 * @type {String}
 	 */
 	CONFIG.Combat.initiative = {
-		formula: "1d10",
+		formula: "1d10 - @attributes.ac.value",
 		decimals: 2,
 	};
 
 	// Define custom Document classes
 	CONFIG.Actor.documentClass = documents.ActorWUTC;
-	CONFIG.Item.documentClass = documents.WUTCItem;
+	CONFIG.Item.documentClass = documents.ItemWUTC;
+	CONFIG.Combat.documentClass = documents.CombatWUTC;
+
+	CONFIG.ui.combat = CombatTrackerWUTC;
 
 	// Register sheet application classes
 	Actors.unregisterSheet("core", ActorSheet);

@@ -16,7 +16,8 @@
 					"ac": {
 						"flat": null,
 						"calc": "default",
-						"formula": ""
+						"formula": "",
+						"value": 9
 					},
 					"hd": {
 						"value": 1
@@ -25,11 +26,6 @@
 						"value": 0,
 						"min": 0,
 						"max": 0
-					},
-					"power": {
-						"value": 5,
-						"min": 0,
-						"max": 5
 					}
 				}
 			},
@@ -71,7 +67,6 @@
 		},
 		"npc": {
 			"templates": ["base", "entity", "creature"],
-			"cr": 0,
 			"attributes": {
 				"numOfAttacks": {
 					"value": 1
@@ -79,7 +74,8 @@
 			},
 			"follower": {
 				"leader": ""
-			}
+			},
+			"notes": ""
 		},
 		"container": {
 			"templates": ["base"],
@@ -137,7 +133,7 @@
 			"templates": ["base"]
 		},
 		"weapon": {
-			"templates": ["base", "physical"],
+			"templates": ["base", "equippable", "physical"],
 			"formula": "1d6",
 			"type": "medium"
 		}

@@ -20,7 +20,10 @@
 		"Attributes": {
 			"ac": "Armor Class",
 			"attack": "Attack Bonus",
-			"hd": "Hit Dice"
+			"Follower": "Follower",
+			"hd": "Hit Dice",
+			"Leader": "Leader",
+			"numOfAttacks": "Num of Attacks"
 		},
 		"Characteristics": {
 			"str": "Strength",
@@ -47,6 +50,18 @@
 		},
 
 		"Add": "Add",
+		"Attack": "Attack using {weapon}",
+		"AttackAgainstTarget": "Attack against {target} using {weapon}",
+		"AttackHit": "The attack hits!",
+		"AttackMiss": "The attack misses.",
+
+		"Combat": {
+			"RollUnder": "Rolled Under",
+			"RollOver": "Rolled Over",
+			"NPC": "NPC"
+		},
+		"Damage": "Damage using {weapon}",
+		"DamageAgainstTarget": "Damage against {target} using {weapon}",
 		"Difficulty": "Difficulty",
 		"Modifiers": "Modifiers",
 		"RollDialog": "Roll",
@@ -57,15 +72,24 @@
 		"EffectEdit": "Edit Effect",
 		"EffectDelete": "Delete Effect",
 
+		"Morale": "Morale",
+		"MoraleCheck": "Morale Check",
+
 		"New": "New",
 		"NewItem": "{new} {item}",
+
+		"Settings": {
+			"autoInit": "Automatically Roll Initiative"
+		},
 
 		"ArmorPl": "Armors",
 		"Equipment": "Equipment",
 		"WeaponPl": "Weapons",
 
+		"WarningAttackNoTargets": "You have no targets!",
 		"Weight": "Weight",
 
+		"Target": "Target",
 		"Type": "Type"
 	}
 }

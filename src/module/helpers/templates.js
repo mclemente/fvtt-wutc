@@ -11,5 +11,7 @@ export const preloadHandlebarsTemplates = async function () {
 		"systems/wutc/templates/actor/parts/actor-spells.html",
 		"systems/wutc/templates/actor/parts/actor-effects.html",
 		"systems/wutc/templates/apps/roll-dialog.hbs",
+		// Sidebar
+		"systems/wutc/templates/sidebar/combat-tracker.hbs",
 	]);
 };
