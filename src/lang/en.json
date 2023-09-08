@@ -49,8 +49,10 @@
 			"Heavy": "Heavy"
 		},
 
+		"ActionWarningNoItem": "The requested item {item} no longer exists on Actor {name}",
 		"Add": "Add",
-		"Attack": "Attack using {weapon}",
+		"Attack": "Attack",
+		"AttackWithWeapon": "Attack using {weapon}",
 		"AttackAgainstTarget": "Attack against {target} using {weapon}",
 		"AttackHit": "The attack hits!",
 		"AttackMiss": "The attack misses.",
@@ -60,18 +62,31 @@
 			"RollOver": "Rolled Over",
 			"NPC": "NPC"
 		},
-		"Damage": "Damage using {weapon}",
+		"Damage": "Damage",
+		"DamageWithWeapon": "Damage using {weapon}",
 		"DamageAgainstTarget": "Damage against {target} using {weapon}",
-		"Difficulty": "Difficulty",
-		"Modifiers": "Modifiers",
-		"RollDialog": "Roll",
-		"RollFormula": "Roll Formula",
 
 		"EffectCreate": "Create Effect",
 		"EffectToggle": "Toggle Effect",
 		"EffectEdit": "Edit Effect",
 		"EffectDelete": "Delete Effect",
 
+		"Difficulty": "Difficulty",
+
+		"Ramming": "Ramming",
+		"RammingDamage": "Ramming Damage",
+		"RammingSelfDamage": "Ramming (Self Damage)",
+		"RammingZeroHP": "You can't Ram with a ship with less than 0 HP.",
+
+		"RollAttack": "Roll Attack",
+		"RollDamage": "Roll Damage",
+		"RollDialog": "Roll",
+		"RollFormula": "Roll Formula",
+
+		"Sinking": "Sinking",
+		"SinkingRoll": "Sinking Roll",
+
+		"Modifiers": "Modifiers",
 		"Morale": "Morale",
 		"MoraleCheck": "Morale Check",
 

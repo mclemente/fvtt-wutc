@@ -80,8 +80,23 @@
 	{{!-- Sheet Body --}}
 	<section class="sheet-body">
 		<div class="tab description" data-group="primary" data-tab="description">
-			{{editor system.biography target="system.biography" rollData=rollData button=true owner=owner
-			editable=editable}}
+			<section class="grid grid-3col">
+				<aside class="sidebar">
+					<div class="abilities flexcol">
+						<div class="ramming flexrow flex-group-center">
+							<button class="rollable">{{localize "WUTC.Ramming"}}</button>
+						</div>
+						<div class="sinking flexrow flex-group-center">
+							<button class="rollable">{{localize "WUTC.Sinking"}}</button>
+						</div>
+					</div>
+				</aside>
+
+				<section class="main grid-span-2">
+					{{editor system.biography target="system.biography" rollData=rollData button=true owner=owner
+					editable=editable}}
+				</section>
+			</section>
 		</div>
 
 		{{!-- Owned Items Tab --}}

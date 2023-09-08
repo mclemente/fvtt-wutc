@@ -1,4 +1,4 @@
-import { WutcRollDialog } from "../apps/RollDialog";
+import { RollDialog } from "../apps/RollDialog";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -39,6 +39,20 @@ export default class ActorWUTC extends Actor {
 
 		this._prepareEncumbrance();
 		this._prepareSaves();
+	}
+
+	async _preCreate(data, options, user) {
+		await super._preCreate(data, options, user);
+
+		// Configure prototype token settings
+		const prototypeToken = {};
+		if (this.type === "character")
+			Object.assign(prototypeToken, {
+				sight: { enabled: true },
+				actorLink: true,
+				disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+			});
+		this.updateSource({ prototypeToken });
 	}
 
 	/**
@@ -208,7 +222,7 @@ export default class ActorWUTC extends Actor {
 
 	async rollTest(key, event) {
 		const title = game.i18n.localize(`WUTC.Characteristics.${key}`) ?? "";
-		return new WutcRollDialog({
+		return new RollDialog({
 			title,
 			actor: this,
 			data: this.getRollData(),
@@ -220,7 +234,7 @@ export default class ActorWUTC extends Actor {
 
 	async rollSave(key, event) {
 		const title = game.i18n.localize(`WUTC.Saves.${key}`) ?? "";
-		return new WutcRollDialog({
+		return new RollDialog({
 			title,
 			actor: this,
 			data: this.getRollData(),
@@ -232,12 +246,67 @@ export default class ActorWUTC extends Actor {
 
 	async rollMorale(event) {
 		const title = game.i18n.localize(`WUTC.MoraleCheck`) ?? "";
-		return new WutcRollDialog({
+		return new RollDialog({
 			title,
 			actor: this,
 			data: this.getRollData(),
 			rollType: "morale",
 			event,
+		});
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async rollRam(event) {
+		const messages = [];
+		const selfDamage = await new Roll("1d6").evaluate({ async: true });
+		const hp = this.system.attributes.hp.value;
+		const remainingHP = hp - selfDamage.total;
+		if (hp <= 0) {
+			ui.notifications.warn(game.i18n.localize("WUTC.RammingZeroHP"));
+			return;
+		}
+		await this.update({ "system.attributes.hp.value": remainingHP });
+
+		messages.push(
+			await selfDamage.toMessage(
+				{
+					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+					flavor: game.i18n.localize(`WUTC.RammingSelfDamage`),
+					rollMode: game.settings.get("core", "rollMode"),
+				},
+				{ create: false },
+			),
+		);
+
+		if (remainingHP <= 0) {
+			return;
+		}
+
+		const numOfDice = Math.max(1, Math.ceil(remainingHP / 6));
+
+		const ramDamage = await new Roll(`${numOfDice}d6`).evaluate({ async: true });
+		messages.push(
+			await ramDamage.toMessage(
+				{
+					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+					flavor: game.i18n.localize(`WUTC.RammingDamage`),
+					rollMode: game.settings.get("core", "rollMode"),
+				},
+				{ create: false },
+			),
+		);
+
+		await ChatMessage.implementation.create(messages);
+	}
+
+	// eslint-disable-next-line no-unused-vars
+	async rollSink(event) {
+		const sinkRoll = await new Roll("1d6").evaluate({ async: true });
+
+		await sinkRoll.toMessage({
+			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+			flavor: game.i18n.localize(`WUTC.SinkingRoll`),
+			rollMode: game.settings.get("core", "rollMode"),
 		});
 	}
 }

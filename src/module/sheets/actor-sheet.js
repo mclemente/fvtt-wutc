@@ -186,6 +186,10 @@ export class ActorSheetWUTC extends ActorSheet {
 
 		html.find(".morale .rollable").click(this._onMoraleCheck.bind(this));
 
+		html.find(".ramming .rollable").click(this._onRammingCheck.bind(this));
+
+		html.find(".sinking .rollable").click(this._onSinkingCheck.bind(this));
+
 		// Drag events for macros.
 		if (this.actor.owner) {
 			let handler = (ev) => this._onDragStart(ev);
@@ -232,6 +236,16 @@ export class ActorSheetWUTC extends ActorSheet {
 		this.actor.rollMorale({ event });
 	}
 
+	_onRammingCheck(event) {
+		event.preventDefault();
+		this.actor.rollRam({ event });
+	}
+
+	_onSinkingCheck(event) {
+		event.preventDefault();
+		this.actor.rollSink({ event });
+	}
+
 	/**
 	 * Handle clickable rolls.
 	 * @param {Event} event   The originating click event
@@ -245,7 +259,9 @@ export class ActorSheetWUTC extends ActorSheet {
 		if (dataset.rollType == "item") {
 			const itemId = element.closest(".item").dataset.itemId;
 			const item = this.actor.items.get(itemId);
-			if (item) return item.roll(event);
+			if (item) {
+				return item.roll(event);
+			}
 		}
 	}
 

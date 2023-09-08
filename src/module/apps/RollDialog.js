@@ -1,6 +1,7 @@
 import RollWUTC from "../dice/roll";
+import { getTargets, getToken } from "../helpers/utils";
 
-export class WutcRollDialog extends FormApplication {
+class BaseRollDialog extends FormApplication {
 	constructor(object = {}, options = {}) {
 		super(object, options);
 		this.render(true);
@@ -23,7 +24,9 @@ export class WutcRollDialog extends FormApplication {
 		super.activateListeners(html);
 		html[0].querySelector("button#close")?.addEventListener("click", this.close.bind(this));
 	}
+}
 
+export class RollDialog extends BaseRollDialog {
 	async getData() {
 		const { data, key, rollType } = this.object;
 		let attribute = {};
@@ -85,20 +88,10 @@ export class WutcRollDialog extends FormApplication {
 	}
 }
 
-export class WutcAttackDialog extends WutcRollDialog {
+export class AttackDialog extends BaseRollDialog {
 	async getData() {
 		const { data, rollType } = this.object;
-		const targets = game.user.targets.ids
-			.filter((id) => {
-				return canvas.tokens.placeables.find((t) => t.id === id);
-			})
-			.map((id) => {
-				const token = canvas.tokens.placeables.find((t) => t.id === id);
-				return {
-					id,
-					name: token.name,
-				};
-			});
+		const targets = getTargets();
 		const attribute = {
 			bonus: data.attributes.attack.value,
 			penalty: 0,
@@ -122,10 +115,10 @@ export class WutcAttackDialog extends WutcRollDialog {
 
 		let term = `1d20`;
 		let flavor = this.title;
-		const id = expanded.target;
+		const targetId = expanded.target;
 		let target = "";
-		if (id) {
-			const token = canvas.tokens.placeables.find((t) => t.id === id);
+		if (targetId) {
+			const token = getToken(targetId);
 			const actor = token.actor;
 			if (actor) {
 				target = token.name;
@@ -152,6 +145,23 @@ export class WutcAttackDialog extends WutcRollDialog {
 			}
 		}
 
+		const item = this.object.actor;
+		let flags = mergeObject(data.flags, {
+			wutc: {
+				roll: {
+					itemId: item.id,
+					target: targetId,
+					type: rollType,
+				},
+			},
+		});
+		const rollData = {
+			actor: item.actor,
+			data,
+			flags,
+		};
+		flags = rollData.flags;
+
 		const messages = [];
 
 		const roll = await new RollWUTC(term, data, options).evaluate({ async: true });
@@ -168,6 +178,7 @@ export class WutcAttackDialog extends WutcRollDialog {
 					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 					flavor,
 					rollMode: game.settings.get("core", "rollMode"),
+					flags,
 				},
 				{ create: false },
 			),
@@ -177,13 +188,15 @@ export class WutcAttackDialog extends WutcRollDialog {
 			const damageRoll = await new Roll(data.item.system.formula, data, {}).evaluate({ async: true });
 			flavor = target
 				? game.i18n.format("WUTC.DamageAgainstTarget", { target, weapon })
-				: game.i18n.format("WUTC.Damage", { target, weapon });
+				: game.i18n.format("WUTC.DamageWithWeapon", { target, weapon });
+			flags.wutc.roll.type = "damage";
 			messages.push(
 				await damageRoll.toMessage(
 					{
 						speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 						flavor,
 						rollMode: game.settings.get("core", "rollMode"),
+						flags,
 					},
 					{ create: false },
 				),

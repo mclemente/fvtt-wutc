@@ -91,6 +91,12 @@ Hooks.once("ready", async function () {
 
 Hooks.on("renderChatMessage", documents.chat.onRenderChatMessage);
 
+// eslint-disable-next-line no-unused-vars
+Hooks.on("renderChatLog", (app, html, data) => documents.ItemWUTC.chatListeners(html));
+
+// eslint-disable-next-line no-unused-vars
+Hooks.on("renderChatPopout", (app, html, data) => documents.ItemWUTC.chatListeners(html));
+
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
 /* -------------------------------------------- */

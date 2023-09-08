@@ -454,6 +454,23 @@
 	padding: 0 8px;
 }
 
+.wutc button {
+	background: rgba(0, 0, 0, 0.1);
+	border: 2px groove #eeede0;
+}
+
+.wutc .abilities button,
+.wutc.card-buttons {
+	margin-top: 5px;
+}
+
+.wutc.card-buttons button {
+	font-size: 12px;
+	height: 24px;
+	line-height: 20px;
+	margin: 2px 0;
+}
+
 .wutc .encumbrance-list {
 	flex-basis: 20%;
 }

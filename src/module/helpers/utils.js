@@ -90,3 +90,21 @@ function _localizeObject(obj, keys) {
 		}
 	}
 }
+
+export function getTargets() {
+	return game.user.targets.ids
+		.filter((id) => {
+			return getToken(id);
+		})
+		.map((id) => {
+			const token = getToken(id);
+			return {
+				id,
+				name: token.name,
+			};
+		});
+}
+
+export function getToken(targetId) {
+	return canvas.tokens.placeables.find((t) => t.id === targetId);
+}
