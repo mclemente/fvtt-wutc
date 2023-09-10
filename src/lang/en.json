@@ -62,16 +62,24 @@
 			"RollOver": "Rolled Over",
 			"NPC": "NPC"
 		},
+
 		"Damage": "Damage",
 		"DamageWithWeapon": "Damage using {weapon}",
 		"DamageAgainstTarget": "Damage against {target} using {weapon}",
+
+		"Description": "Description",
+
+		"Difficulty": "Difficulty",
 
 		"EffectCreate": "Create Effect",
 		"EffectToggle": "Toggle Effect",
 		"EffectEdit": "Edit Effect",
 		"EffectDelete": "Delete Effect",
 
-		"Difficulty": "Difficulty",
+		"Formula": "Formula",
+		"FormulaCustomize": "Customize Formula",
+
+		"Price": "Price",
 
 		"Ramming": "Ramming",
 		"RammingDamage": "Ramming Damage",
@@ -93,6 +101,8 @@
 		"New": "New",
 		"NewItem": "{new} {item}",
 
+		"Quantity": "Quantity",
+
 		"Settings": {
 			"autoInit": "Automatically Roll Initiative"
 		},
@@ -103,6 +113,7 @@
 
 		"WarningAttackNoTargets": "You have no targets!",
 		"Weight": "Weight",
+		"WeightType": "Weight Type",
 
 		"Target": "Target",
 		"Type": "Type"

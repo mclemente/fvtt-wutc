@@ -33,8 +33,7 @@ export default class ItemWUTC extends Item {
 
 	_prepareWeaponFormula() {
 		const type = this.system.type;
-		if (!type) return;
-
+		if (!type || this.system.customizeFormula) return;
 		switch (type) {
 			case "light":
 				this.system.formula = "2d6kl";

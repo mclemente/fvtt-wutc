@@ -88,9 +88,7 @@
 				"max": 1,
 				"marines": 0
 			},
-			"price": {
-				"value": 0
-			},
+			"price": 0,
 			"speed": {
 				"value": 3,
 				"min": 0
@@ -108,9 +106,7 @@
 				"equipped": false
 			},
 			"physical": {
-				"price": {
-					"value": 0
-				},
+				"price": 0,
 				"quantity": 1,
 				"weight": 1
 			}
@@ -127,14 +123,20 @@
 			"formula": ""
 		},
 		"spell": {
-			"templates": ["base"]
+			"templates": ["base"],
+			"price": 0,
+			"quantity": 1
 		},
 		"trait": {
-			"templates": ["base"]
+			"templates": ["base"],
+			"price": 0,
+			"quantity": 1
 		},
 		"weapon": {
 			"templates": ["base", "equippable", "physical"],
+			"customizeFormula": false,
 			"formula": "1d6",
+			"properties": {},
 			"type": "medium"
 		}
 	}
