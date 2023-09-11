@@ -112,6 +112,7 @@ export class AttackDialog extends BaseRollDialog {
 			rollUnder: false,
 			type: rollType,
 		};
+		const reasons = [];
 
 		let term = `1d20`;
 		let flavor = this.title;
@@ -126,6 +127,10 @@ export class AttackDialog extends BaseRollDialog {
 				const ac = actor.system.attributes.ac;
 				if (ac) {
 					expanded.bonus += ac.value;
+				}
+				if (actor.statuses.has("prone")) {
+					options.success = 0;
+					reasons.push(game.i18n.format("WUTC.AttackHitReasons.Prone"), { target });
 				}
 			}
 		}
@@ -170,6 +175,9 @@ export class AttackDialog extends BaseRollDialog {
 			flavor += `<br>${game.i18n.localize("WUTC.AttackHit")}`;
 		} else if (target) {
 			flavor += `<br>${game.i18n.localize("WUTC.AttackMiss")}`;
+		}
+		if (reasons.length) {
+			flavor += "<br>" + reasons.join("<br>");
 		}
 
 		messages.push(

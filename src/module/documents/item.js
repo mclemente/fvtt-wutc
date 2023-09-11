@@ -45,6 +45,9 @@ export default class ItemWUTC extends Item {
 			default:
 				this.system.formula = "1d6";
 		}
+		if (this.system.properties?.explodingDice) {
+			this.system.formula += "x";
+		}
 	}
 
 	/**

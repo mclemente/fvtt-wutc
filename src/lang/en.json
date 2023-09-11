@@ -46,7 +46,93 @@
 		"Weapon": {
 			"Light": "Light",
 			"Medium": "Medium",
-			"Heavy": "Heavy"
+			"Heavy": "Heavy",
+			"Properties": {
+				"Disarm": {
+					"label": "Disarm",
+					"desc": "After damage is rolled, reduce the result by 3 and roll a second attack - if successful, a weapon or shield is ripped from the grip of the opponent."
+				},
+				"Stun": {
+					"label": "Stun",
+					"desc": "Forgo damage to attempt to stun - after a successful attack, target attempts to save vs paralysis - failure results in them losing their combat round. Further strikes against them are at +3"
+				},
+				"Sneak": {
+					"label": "Sneak Attack",
+					"desc": ""
+				},
+				"IgnoreShields": {
+					"label": "Ignore Shields",
+					"desc": ""
+				},
+				"Cleave": {
+					"label": "Cleave",
+					"desc": "Upon a killing blow, the wielder can roll another attack. This effect can be triggered multiple times"
+				},
+				"Bounce": {
+					"label": "Bouncing",
+					"desc": "If 4+ damage is dealt when thrown, the weapon bounces, \"attacking\" again."
+				},
+				"Guardian": {
+					"label": "Guardian",
+					"desc": "Attack against a nominated adjacent ally are at -2"
+				},
+				"Piercing": {
+					"label": "Piercing",
+					"desc": "AC of target is treated as 7 when attacked."
+				},
+				"Aiming": {
+					"label": "Aiming",
+					"desc": "+1 to hit per round spent aiming."
+				},
+				"Shatter": {
+					"label": "Shatter",
+					"desc": "+2 to hit against metallic or rigid armour."
+				},
+				"Sentinel": {
+					"label": "Sentinel",
+					"desc": "Opponents must make a Dodge Save to approach, failure resulting in an automatic hit with this weapon"
+				},
+				"FreeMovement": {
+					"label": "Free Movement",
+					"desc": "Can split move and fire"
+				},
+				"Riposte": {
+					"label": "Riposte",
+					"desc": "Attacks against the wielder which score below 7 (before AC is applied) result in the wielder being able to attempt a counter-attack, resolved normally."
+				},
+				"Lobber": {
+					"label": "Lobber",
+					"desc": "Can be used to launch grenades."
+				},
+				"HoldAttack": {
+					"label": "Hold Attack",
+					"desc": "Wielder may choose hold their attack until someone tries to approach them - they then roll an attack first."
+				},
+				"ExplodingDice": {
+					"label": "Exploding Dice",
+					"desc": "If a 6 is rolled for damage, roll another d6 and add the result. This effect can be triggered multiple times. Attacks against the wielder are at +1."
+				},
+				"Pushing": {
+					"label": "Pushing",
+					"desc": "Those struck are thrown backwards if unable to make a Physique Save. Use the damage rolled to determine distance, minus the HD of the creature struck."
+				},
+				"Throwable": {
+					"label": "Throwable",
+					"desc": ""
+				},
+				"Ranged": {
+					"label": "Ranged",
+					"desc": ""
+				},
+				"Reach": {
+					"label": "Reach",
+					"desc": "Weapon can strike from behind another character."
+				},
+				"TwoHanded": {
+					"label": "Two-Handed",
+					"desc": "Weapon requires two hands."
+				}
+			}
 		},
 
 		"ActionWarningNoItem": "The requested item {item} no longer exists on Actor {name}",
@@ -56,6 +142,9 @@
 		"AttackAgainstTarget": "Attack against {target} using {weapon}",
 		"AttackHit": "The attack hits!",
 		"AttackMiss": "The attack misses.",
+		"AttackHitReasons": {
+			"Prone": "{target} was automatically hit because it was prone."
+		},
 
 		"Combat": {
 			"RollUnder": "Rolled Under",
@@ -112,6 +201,7 @@
 		"WeaponPl": "Weapons",
 
 		"WarningAttackNoTargets": "You have no targets!",
+		"WeaponProperties": "Properties",
 		"Weight": "Weight",
 		"WeightType": "Weight Type",
 

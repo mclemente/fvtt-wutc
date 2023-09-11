@@ -454,6 +454,27 @@
 	padding: 0 8px;
 }
 
+.wutc .form-group.stacked label.checkbox,
+.wutc .form-group.stacked label.radio {
+	flex: auto;
+	text-align: left;
+}
+
+.wutc.sheet.item .weapon-properties label.checkbox {
+	flex: 0 0 120px;
+}
+
+.wutc .tag {
+	display: inline-block;
+	margin: 0 2px 0 0;
+	padding: 0 3px;
+	font-size: 10px;
+	line-height: 16px;
+	border: 1px solid #999;
+	border-radius: 3px;
+	background: rgba(0, 0, 0, 0.05);
+}
+
 .wutc button {
 	background: rgba(0, 0, 0, 0.1);
 	border: 2px groove #eeede0;

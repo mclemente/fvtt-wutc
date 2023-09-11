@@ -36,8 +36,27 @@
 	<section class="sheet-body">
 		{{!-- Description Tab --}}
 		<div class="tab" data-group="primary" data-tab="description">
-			{{editor system.description target="system.description" rollData=rollData button=true owner=owner
-			editable=editable}}
+			<section class="grid grid-3col">
+				<aside class="sidebar">
+					<div class="abilities flexcol">
+						<h3><label>{{localize "WUTC.WeaponProperties"}}</label></h3>
+						<div>
+							{{#each config.weaponProperties as |data key|}}
+							{{#if (lookup ../system.properties key )}}
+							<span class="tag" data-tooltip="{{data.desc}}" data-tooltip-direction="UP">
+								{{data.label}}
+							</span>
+							{{/if}}
+							{{/each}}
+						</div>
+					</div>
+				</aside>
+				<section class="main grid-span-2">
+					{{editor system.description target="system.description" rollData=rollData button=true owner=owner
+					editable=editable}}
+				</section>
+			</section>
+
 		</div>
 
 		{{!-- Attributes Tab --}}
@@ -63,6 +82,19 @@
 				<select name="system.type">
 					{{selectOptions config.weaponTypes selected=system.type}}
 				</select>
+			</div>
+			<div class="form-group stacked weapon-properties">
+				<label>{{localize "WUTC.WeaponProperties"}}</label>
+				{{#each config.weaponProperties as |data key|}}
+				<label class="checkbox" data-tooltip="{{data.desc}}" data-tooltip-direction="UP">
+					<input
+						type="checkbox"
+						name="system.properties.{{key}}"
+						{{checked (lookup ../system.properties key )}}
+					/>
+					{{data.label}}</label
+				>
+				{{/each}}
 			</div>
 		</div>
 	</section>
