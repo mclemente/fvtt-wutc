@@ -97,8 +97,27 @@ export class AttackDialog extends BaseRollDialog {
 			penalty: 0,
 			targets,
 		};
+		const properties = {
+			toggleable: {},
+			reminder: {},
+		};
+		for (const [key, value] of Object.entries(CONFIG.WUTC.weaponProperties)) {
+			if (data.item.system.properties[key]) {
+				if (value.toggleable) {
+					properties.toggleable[key] = CONFIG.WUTC.weaponProperties[key];
+				} else if (value.reminder !== false) {
+					properties.reminder[key] = CONFIG.WUTC.weaponProperties[key];
+				}
+			}
+		}
 		return {
 			attribute,
+			config: CONFIG.WUTC.weaponProperties,
+			hasProperties: {
+				toggleable: Object.keys(properties.toggleable).length,
+				reminder: Object.keys(properties.reminder).length,
+			},
+			properties,
 			rollType,
 		};
 	}
@@ -106,7 +125,7 @@ export class AttackDialog extends BaseRollDialog {
 	async _updateObject(ev, formData) {
 		const { rollType, data } = this.object;
 		const weapon = data.item.name;
-		const expanded = foundry.utils.expandObject(formData);
+		let { properties, target: targetId, bonus, penalty, additionalBonus } = foundry.utils.expandObject(formData);
 		const options = {
 			success: 20,
 			rollUnder: false,
@@ -116,33 +135,50 @@ export class AttackDialog extends BaseRollDialog {
 
 		let term = `1d20`;
 		let flavor = this.title;
-		const targetId = expanded.target;
-		let target = "";
+		const targetToken = targetId ? getToken(targetId) : {};
 		if (targetId) {
-			const token = getToken(targetId);
-			const actor = token.actor;
+			const actor = targetToken.actor;
 			if (actor) {
-				target = token.name;
-				flavor = game.i18n.format("WUTC.AttackAgainstTarget", { target, weapon });
-				const ac = actor.system.attributes.ac;
-				if (ac) {
-					expanded.bonus += ac.value;
-				}
+				targetId = targetToken.name;
+				flavor = game.i18n.format("WUTC.AttackAgainstTarget", { target: targetId, weapon });
 				if (actor.statuses.has("prone")) {
 					options.success = 0;
-					reasons.push(game.i18n.format("WUTC.AttackHitReasons.Prone"), { target });
+					reasons.push(game.i18n.format("WUTC.AttackReasons.AutoHitProne", { target: targetId }));
+				} else {
+					const ac = actor.system.attributes.ac;
+					if (ac) {
+						if (properties.ignoreShields && ac.shield) {
+							bonus += ac.value - ac.shield;
+							reasons.push(
+								game.i18n.format("WUTC.AttackReasons.IgnoreShields", {
+									target: targetId,
+									bonus: Math.abs(ac.shield),
+								}),
+							);
+						}
+						if (properties.piercing) {
+							bonus += 7;
+							reasons.push(
+								game.i18n.format("WUTC.AttackReasons.Piercing", {
+									target: targetId,
+									bonus: Math.abs(ac.shield),
+								}),
+							);
+						} else {
+							bonus += ac.value;
+						}
+					}
 				}
 			}
 		}
 
-		if (expanded.bonus) {
-			term += "+" + expanded.bonus;
+		if (bonus) {
+			term += "+" + bonus;
 		}
-		if (expanded.penalty) {
-			term += expanded.penalty;
+		if (penalty) {
+			term += penalty;
 		}
-		if (expanded.additionalBonus.length) {
-			const additionalBonus = expanded.additionalBonus;
+		if (additionalBonus.length) {
 			if (!/^(\+|-|\*|\/)/.test(additionalBonus)) {
 				term += "+" + additionalBonus;
 			} else {
@@ -163,23 +199,28 @@ export class AttackDialog extends BaseRollDialog {
 		const rollData = {
 			actor: item.actor,
 			data,
+			target: targetToken,
+			term: [term],
+			properties,
+			reasons,
 			flags,
 		};
+		Hooks.call("wutc.preRollAttack", rollData, {});
 		flags = rollData.flags;
 
-		const messages = [];
+		const roll = await new RollWUTC(rollData.term.join(""), rollData.data, options).evaluate({ async: true });
+		Hooks.call("wutc.rollAttack", roll, rollData, {});
 
-		const roll = await new RollWUTC(term, data, options).evaluate({ async: true });
-
-		if (roll.isSuccess && target) {
+		if (roll.isSuccess && targetId) {
 			flavor += `<br>${game.i18n.localize("WUTC.AttackHit")}`;
-		} else if (target) {
+		} else if (targetId) {
 			flavor += `<br>${game.i18n.localize("WUTC.AttackMiss")}`;
 		}
 		if (reasons.length) {
 			flavor += "<br>" + reasons.join("<br>");
 		}
 
+		const messages = [];
 		messages.push(
 			await roll.toMessage(
 				{
@@ -192,11 +233,26 @@ export class AttackDialog extends BaseRollDialog {
 			),
 		);
 
-		if (roll.isSuccess || !target) {
-			const damageRoll = await new Roll(data.item.system.formula, data, {}).evaluate({ async: true });
-			flavor = target
-				? game.i18n.format("WUTC.DamageAgainstTarget", { target, weapon })
-				: game.i18n.format("WUTC.DamageWithWeapon", { target, weapon });
+		if (roll.isSuccess || !targetId) {
+			let rollData = {
+				actor: item.actor,
+				data,
+				target: targetToken,
+				term: [data.item.system.formula],
+				properties,
+				reasons: [],
+				flags,
+			};
+			Hooks.call("wutc.preRollDamage", rollData, {});
+			const damageRoll = await new Roll(rollData.term.join(""), rollData.data, {}).evaluate({ async: true });
+			Hooks.call("wutc.rollDamage", damageRoll, rollData, {});
+
+			flavor = targetId
+				? game.i18n.format("WUTC.DamageAgainstTarget", { target: targetId, weapon })
+				: game.i18n.format("WUTC.DamageWithWeapon", { target: targetId, weapon });
+			if (rollData.reasons.length) {
+				flavor += "<br>" + rollData.reasons.join("<br>");
+			}
 			flags.wutc.roll.type = "damage";
 			messages.push(
 				await damageRoll.toMessage(

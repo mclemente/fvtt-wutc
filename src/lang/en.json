@@ -52,13 +52,13 @@
 					"label": "Disarm",
 					"desc": "After damage is rolled, reduce the result by 3 and roll a second attack - if successful, a weapon or shield is ripped from the grip of the opponent."
 				},
-				"Stun": {
-					"label": "Stun",
+				"Stunning": {
+					"label": "Stunning",
 					"desc": "Forgo damage to attempt to stun - after a successful attack, target attempts to save vs paralysis - failure results in them losing their combat round. Further strikes against them are at +3"
 				},
 				"Sneak": {
 					"label": "Sneak Attack",
-					"desc": ""
+					"desc": "Damage as Heavy against Prone targets."
 				},
 				"IgnoreShields": {
 					"label": "Ignore Shields",
@@ -142,8 +142,15 @@
 		"AttackAgainstTarget": "Attack against {target} using {weapon}",
 		"AttackHit": "The attack hits!",
 		"AttackMiss": "The attack misses.",
-		"AttackHitReasons": {
-			"Prone": "{target} was automatically hit because it was prone."
+		"AttackReasons": {
+			"AutoHitProne": "{target} was automatically hit because it is prone.",
+			"IgnoreShields": "{target}'s Shield bonus ({bonus}) was ignored.",
+			"Piercing": "{target}'s AC was treated as 7."
+		},
+		"DamageReasons": {
+			"Disarm": "Disarm: damage was reduced by 3. Roll a second attack.",
+			"Bounce": "Bounce: If the weapon was thrown, you can attack again.",
+			"Sneak": "Damage rolled as Heavy because target is prone."
 		},
 
 		"Combat": {
@@ -202,6 +209,7 @@
 
 		"WarningAttackNoTargets": "You have no targets!",
 		"WeaponProperties": "Properties",
+		"WeaponPropertiesReminders": "Reminders",
 		"Weight": "Weight",
 		"WeightType": "Weight Type",
 

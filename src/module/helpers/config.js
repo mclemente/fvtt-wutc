@@ -21,10 +21,12 @@ WUTC.weaponProperties = {
 	disarm: {
 		roll: "attack",
 		toggleable: true,
+		default: false,
 	},
-	stun: {
+	stunning: {
 		roll: "attack",
 		toggleable: true,
+		default: false,
 	},
 	sneak: {},
 	ignoreShields: {},

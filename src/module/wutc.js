@@ -10,6 +10,7 @@ import { preloadHandlebarsTemplates } from "./helpers/templates.js";
 import * as dice from "./dice/_module.js";
 import * as documents from "./documents/_module.js";
 import * as utils from "./helpers/utils.js";
+import * as hooks from "./hooks/_module.js";
 
 /* -------------------------------------------- */
 /*  Define Module Structure                     */
@@ -58,6 +59,14 @@ Hooks.once("init", async () => {
 
 	// Register custom system settings
 	registerSettings();
+
+	for (let group of Object.keys(hooks)) {
+		for (let hook of Object.getOwnPropertyNames(hooks[group])) {
+			if (!["length", "name", "prototype"].includes(hook)) {
+				Hooks.on(hook, hooks[group][hook]);
+			}
+		}
+	}
 
 	// Preload Handlebars templates.
 	return preloadHandlebarsTemplates();

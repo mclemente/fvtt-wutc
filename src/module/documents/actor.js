@@ -33,7 +33,7 @@ export default class ActorWUTC extends Actor {
 		this._prepareCharacterData();
 		this._prepareNpcData();
 
-		if (this.type !== "npc") {
+		if (["character", "npc"].includes(this.type)) {
 			this._prepareArmorClass();
 		}
 
@@ -108,12 +108,6 @@ export default class ActorWUTC extends Actor {
 			ac.armor = 9;
 		}
 
-		const rollData = this.getRollData({ deterministic: true });
-		rollData.attributes.ac = ac;
-		const formula = "@attributes.ac.armor + @attributes.ac.bonus + @attributes.ac.penalty";
-		const replaced = Roll.replaceFormulaData(formula, rollData);
-		ac.base = Roll.safeEval(replaced);
-
 		// Equipped Shield
 		if (shields.length) {
 			if (shields.length > 1) {
@@ -126,8 +120,16 @@ export default class ActorWUTC extends Actor {
 			ac.equippedShield = shields[0];
 		}
 
-		// Compute total AC and return
-		ac.value = ac.base + (ac.shield ?? 0) + (ac.bonus ?? 0) + (ac.cover ?? 0);
+		if (this.type !== "npc") {
+			const rollData = this.getRollData({ deterministic: true });
+			rollData.attributes.ac = ac;
+			const formula = "@attributes.ac.armor + @attributes.ac.bonus + @attributes.ac.penalty";
+			const replaced = Roll.replaceFormulaData(formula, rollData);
+			ac.base = Roll.safeEval(replaced);
+
+			// Compute total AC and return
+			ac.value = ac.base + (ac.shield ?? 0) + (ac.bonus ?? 0) + (ac.cover ?? 0);
+		}
 	}
 
 	_prepareEncumbrance() {

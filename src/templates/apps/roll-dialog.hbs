@@ -21,15 +21,43 @@
 				<label for="5d6">5d6</label>
 			</div>
 			<hr />
-		{{else if (and (eq rollType "attack") (gt attribute.targets.length 0))}}
-			<div class="form-group">
-				<label>{{localize "WUTC.Target"}}</label>
-				<select name="target">
-					{{selectOptions attribute.targets nameAttr="id" labelAttr="name"}}
-				</select>
-			</div>
-		{{else if (and (eq rollType "attack") (not attribute.targets.length))}}
-			<div class="warning red">{{localize "WUTC.WarningAttackNoTargets"}}</div>
+		{{/if}}
+		{{#if (eq rollType "attack")}}
+
+			{{#if attribute.targets.length}}
+				<div class="form-group">
+					<label>{{localize "WUTC.Target"}}</label>
+					<select name="target">
+						{{selectOptions attribute.targets nameAttr="id" labelAttr="name"}}
+					</select>
+				</div>
+			{{else}}
+				<div class="warning red">{{localize "WUTC.WarningAttackNoTargets"}}</div>
+			{{/if}}
+			{{#if hasProperties.toggleable}}
+				<div class="form-group stacked weapon-properties" style="margin-bottom: 0.5em">
+					<label>{{localize "WUTC.WeaponProperties"}}</label>
+					{{#each properties.toggleable as |data key|}}
+						<label class="checkbox" data-tooltip="{{data.desc}}" data-tooltip-direction="UP">
+							<input type="checkbox" name="properties.{{key}}" {{checked data.default}} />
+							{{data.label}}
+						</label>
+					{{/each}}
+				</div>
+			{{/if}}
+			{{#if hasProperties.reminder}}
+				<div class="flexcol" style="margin-bottom: 0.5em">
+					<label>{{localize "WUTC.WeaponPropertiesReminders"}}</label>
+					<div>
+						{{#each properties.reminder as |data key|}}
+							<span class="tag" data-tooltip="{{data.desc}}" data-tooltip-direction="UP">
+								{{data.label}}
+							</span>
+							<input style="display: none;" type="checkbox" name="properties.{{key}}" checked />
+						{{/each}}
+					</div>
+				</div>
+			{{/if}}
 		{{/if}}
 		<div class="form-group">
 			<label>{{localize "WUTC.Modifiers"}}</label>

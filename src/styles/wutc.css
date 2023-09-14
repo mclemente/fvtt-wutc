@@ -464,6 +464,11 @@
 	flex: 0 0 120px;
 }
 
+.wutc .form-group.stacked span.reminder {
+	font-size: var(--font-size-12);
+	margin-bottom: 2px;
+}
+
 .wutc .tag {
 	display: inline-block;
 	margin: 0 2px 0 0;
