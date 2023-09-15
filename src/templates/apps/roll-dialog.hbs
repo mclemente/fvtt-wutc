@@ -39,7 +39,7 @@
 					<label>{{localize "WUTC.WeaponProperties"}}</label>
 					{{#each properties.toggleable as |data key|}}
 						<label class="checkbox" data-tooltip="{{data.desc}}" data-tooltip-direction="UP">
-							<input type="checkbox" name="properties.{{key}}" {{checked data.default}} />
+							<input type="checkbox" name="properties.{{key}}" />
 							{{data.label}}
 						</label>
 					{{/each}}

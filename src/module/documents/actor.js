@@ -44,15 +44,22 @@ export default class ActorWUTC extends Actor {
 	async _preCreate(data, options, user) {
 		await super._preCreate(data, options, user);
 
-		// Configure prototype token settings
-		const prototypeToken = {};
-		if (this.type === "character")
+		if (this.type === "character") {
+			// Configure prototype token settings
+			const prototypeToken = {};
 			Object.assign(prototypeToken, {
 				sight: { enabled: true },
 				actorLink: true,
 				disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
 			});
-		this.updateSource({ prototypeToken });
+			this.updateSource({ prototypeToken });
+		} else if (this.type === "npc") {
+			this.updateSource({ img: "systems/wutc/assets/icons/svg/orc-head.svg" });
+		} else if (this.type === "container") {
+			this.updateSource({ img: "icons/svg/chest.svg" });
+		} else if (this.type === "ship") {
+			this.updateSource({ img: "systems/wutc/assets/icons/svg/sailboat.svg" });
+		}
 	}
 
 	/**

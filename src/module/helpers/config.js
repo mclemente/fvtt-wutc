@@ -19,29 +19,19 @@ preLocalize("weaponTypes");
 
 WUTC.weaponProperties = {
 	disarm: {
-		roll: "attack",
 		toggleable: true,
-		default: false,
 	},
 	stunning: {
-		roll: "attack",
 		toggleable: true,
-		default: false,
 	},
 	sneak: {},
 	ignoreShields: {},
 	cleave: {},
 	bounce: {},
 	guardian: {},
-	piercing: {
-		roll: "attack",
-	},
-	aiming: {
-		roll: "attack",
-	},
-	shatter: {
-		roll: "attack",
-	},
+	piercing: {},
+	aiming: {},
+	shatter: {},
 	sentinel: {},
 	freeMovement: {},
 	riposte: {},

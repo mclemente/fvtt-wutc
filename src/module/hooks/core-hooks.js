@@ -6,6 +6,9 @@ export default class CoreHooks {
 
 	static "wutc.rollAttack"(roll, { actor, data, target, term, properties, reasons, flags }) {
 		const item = data.item;
+		if (roll.isSuccess && properties.stunning) {
+			reasons.push(game.i18n.format("WUTC.AttackReasons.Stunning", { target: target.name }));
+		}
 	}
 
 	static "wutc.preRollDamage"({ actor, data, target, term, properties, reasons, flags }) {

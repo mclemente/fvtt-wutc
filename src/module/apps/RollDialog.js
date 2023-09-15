@@ -233,7 +233,7 @@ export class AttackDialog extends BaseRollDialog {
 			),
 		);
 
-		if (roll.isSuccess || !targetId) {
+		if (!properties.stunning && (roll.isSuccess || !targetId)) {
 			let rollData = {
 				actor: item.actor,
 				data,

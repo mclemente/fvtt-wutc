@@ -31,6 +31,21 @@ export default class ItemWUTC extends Item {
 		}
 	}
 
+	async _preCreate(data, options, user) {
+		await super._preCreate(data, options, user);
+
+		// Configure prototype token settings
+		if (this.type === "armor") {
+			this.updateSource({ img: "systems/wutc/assets/icons/svg/armor-vest.svg" });
+		} else if (this.type === "weapon") {
+			this.updateSource({ img: "icons/svg/sword.svg" });
+		} else if (this.type === "spell") {
+			this.updateSource({ img: "systems/wutc/assets/icons/svg/scroll-unfurled.svg" });
+		} else if (this.type === "trait") {
+			this.updateSource({ img: "systems/wutc/assets/icons/svg/skills.svg" });
+		}
+	}
+
 	_prepareWeaponFormula() {
 		const type = this.system.type;
 		if (!type || this.system.customizeFormula) return;

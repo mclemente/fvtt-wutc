@@ -145,7 +145,8 @@
 		"AttackReasons": {
 			"AutoHitProne": "{target} was automatically hit because it is prone.",
 			"IgnoreShields": "{target}'s Shield bonus ({bonus}) was ignored.",
-			"Piercing": "{target}'s AC was treated as 7."
+			"Piercing": "{target}'s AC was treated as 7.",
+			"Stunning": "Stunning: {target} must attempt a save against Paralysis."
 		},
 		"DamageReasons": {
 			"Disarm": "Disarm: damage was reduced by 3. Roll a second attack.",
