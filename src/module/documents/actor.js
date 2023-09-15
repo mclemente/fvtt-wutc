@@ -44,22 +44,39 @@ export default class ActorWUTC extends Actor {
 	async _preCreate(data, options, user) {
 		await super._preCreate(data, options, user);
 
+		// Configure prototype token settings
+		const changes = {};
+		const prototypeToken = {};
 		if (this.type === "character") {
-			// Configure prototype token settings
-			const prototypeToken = {};
 			Object.assign(prototypeToken, {
 				sight: { enabled: true },
 				actorLink: true,
 				disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
 			});
-			this.updateSource({ prototypeToken });
+			changes.prototypeToken = prototypeToken;
 		} else if (this.type === "npc") {
-			this.updateSource({ img: "systems/wutc/assets/icons/svg/orc-head.svg" });
+			const img = "systems/wutc/assets/icons/svg/orc-head.svg";
+			Object.assign(prototypeToken, {
+				texture: { src: img },
+			});
+			changes.prototypeToken = prototypeToken;
+			changes.img = img;
 		} else if (this.type === "container") {
-			this.updateSource({ img: "icons/svg/chest.svg" });
+			const img = "icons/svg/chest.svg";
+			Object.assign(prototypeToken, {
+				texture: { src: img },
+			});
+			changes.prototypeToken = prototypeToken;
+			changes.img = img;
 		} else if (this.type === "ship") {
-			this.updateSource({ img: "systems/wutc/assets/icons/svg/sailboat.svg" });
+			const img = "systems/wutc/assets/icons/svg/sailboat.svg";
+			Object.assign(prototypeToken, {
+				texture: { src: img },
+			});
+			changes.prototypeToken = prototypeToken;
+			changes.img = img;
 		}
+		this.updateSource(changes);
 	}
 
 	/**
