@@ -6,6 +6,7 @@
 export const preloadHandlebarsTemplates = async function () {
 	return loadTemplates([
 		// Actor partials.
+		"systems/wutc/templates/actor/parts/actor-notes.html",
 		"systems/wutc/templates/actor/parts/actor-features.html",
 		"systems/wutc/templates/actor/parts/actor-items.html",
 		"systems/wutc/templates/actor/parts/actor-spells.html",

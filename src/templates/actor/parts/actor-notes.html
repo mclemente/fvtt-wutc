@@ -1,0 +1,13 @@
+{{#if isGM}}
+<div class="resources grid grid-2col" style="height: 100%">
+	<div>
+		<h3>Notes</h3>
+		{{editor system.notes target="system.notes" rollData=rollData button=true owner=owner editable=editable}}
+	</div>
+	<div>
+		<h3>GM Notes</h3>
+		{{editor system.gmNotes target="system.gmNotes" rollData=rollData button=true owner=owner editable=editable}}
+	</div>
+</div>
+{{else}} {{editor system.notes target="system.notes" rollData=rollData button=true owner=owner editable=editable}}
+{{/if}}

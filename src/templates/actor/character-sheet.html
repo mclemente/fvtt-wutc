@@ -50,9 +50,7 @@
 		<a class="item" data-tab="spells">Spells</a>
 		{{/if}}
 		<a class="item" data-tab="description">{{localize "WUTC.Description"}}</a>
-		{{#if (eq actor.type "npc")}}
 		<a class="item" data-tab="notes">Notes</a>
-		{{/if}}
 		<!-- <a class="item" data-tab="effects">Effects</a> -->
 	</nav>
 
@@ -183,12 +181,9 @@
 			editable=editable}}
 		</div>
 
-		{{#if (eq actor.type "npc")}}
 		<div class="tab notes" data-group="primary" data-tab="notes">
-			{{editor system.notes target="system.biography" rollData=rollData button=true owner=owner
-			editable=editable}}
+			{{> "systems/wutc/templates/actor/parts/actor-notes.html"}}
 		</div>
-		{{/if}}
 
 		<div class="tab items" data-group="primary" data-tab="items">
 			{{> "systems/wutc/templates/actor/parts/actor-items.html"}}
