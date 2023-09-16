@@ -25,6 +25,7 @@
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
 		<a class="item" data-tab="description">{{localize "WUTC.Description"}}</a>
+		<a class="item" data-tab="notes">Notes</a>
 		<a class="item" data-tab="attributes">Attributes</a>
 	</nav>
 
@@ -35,6 +36,11 @@
 			{{!-- To render inline rolls in a TinyMCE editor, you need to pass the parent actor's (if any) roll data to
 			the rollData prop. --}} {{editor system.description target="system.description" rollData=rollData
 			button=true owner=owner editable=editable}}
+		</div>
+
+		<div class="tab notes" data-group="primary" data-tab="notes">
+			{{editor system.gmNotes target="system.gmNotes" rollData=rollData button=true owner=owner
+			editable=editable}}
 		</div>
 
 		{{!-- Attributes Tab --}}

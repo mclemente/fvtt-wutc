@@ -29,6 +29,7 @@
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
 		<a class="item" data-tab="description">{{localize "WUTC.Description"}}</a>
+		<a class="item" data-tab="notes">Notes</a>
 		<a class="item" data-tab="attributes">Attributes</a>
 	</nav>
 
@@ -41,13 +42,11 @@
 					<div class="abilities flexcol">
 						<h3><label>{{localize "WUTC.WeaponProperties"}}</label></h3>
 						<div>
-							{{#each config.weaponProperties as |data key|}}
-							{{#if (lookup ../system.properties key )}}
+							{{#each config.weaponProperties as |data key|}} {{#if (lookup ../system.properties key )}}
 							<span class="tag" data-tooltip="{{data.desc}}" data-tooltip-direction="UP">
 								{{data.label}}
 							</span>
-							{{/if}}
-							{{/each}}
+							{{/if}} {{/each}}
 						</div>
 					</div>
 				</aside>
@@ -56,7 +55,11 @@
 					editable=editable}}
 				</section>
 			</section>
+		</div>
 
+		<div class="tab notes" data-group="primary" data-tab="notes">
+			{{editor system.gmNotes target="system.gmNotes" rollData=rollData button=true owner=owner
+			editable=editable}}
 		</div>
 
 		{{!-- Attributes Tab --}}
@@ -90,7 +93,7 @@
 					<input
 						type="checkbox"
 						name="system.properties.{{key}}"
-						{{checked (lookup ../system.properties key )}}
+						{{checked (lookup ../system.properties key)}}
 					/>
 					{{data.label}}
 				</label>
