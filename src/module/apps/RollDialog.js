@@ -28,16 +28,25 @@ class BaseRollDialog extends FormApplication {
 
 export class RollDialog extends BaseRollDialog {
 	async getData() {
-		const { data, key, rollType } = this.object;
+		const { actor, data, key, rollType } = this.object;
 		let attribute = {};
+		let reminders = [];
 		if (rollType === "test") {
 			attribute = data.characteristics[key];
 		} else if (rollType === "save") {
 			attribute = data.saves[key];
+			if (key === "warding") {
+				for (let item of actor.items) {
+					if (item.type === "armor" && item.system.armor.type === "ward") {
+						reminders.push({ name: item.name, reminder: item.system.armor.value });
+					}
+				}
+			}
 		}
 		attribute = mergeObject({ bonus: 0, penalty: 0 }, attribute);
 		return {
 			attribute,
+			reminders,
 			rollType,
 		};
 	}
@@ -126,6 +135,7 @@ export class AttackDialog extends BaseRollDialog {
 		const { rollType, data } = this.object;
 		const weapon = data.item.name;
 		let { properties, target: targetId, bonus, penalty, additionalBonus } = foundry.utils.expandObject(formData);
+		if (!properties) properties = {};
 		const options = {
 			success: 20,
 			rollUnder: false,

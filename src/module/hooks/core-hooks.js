@@ -13,7 +13,7 @@ export default class CoreHooks {
 
 	static "wutc.preRollDamage"({ actor, data, target, term, properties, reasons, flags }) {
 		const item = data.item;
-		if (target?.actor.statuses.has("prone") && properties.sneak) {
+		if (target?.actor?.statuses.has("prone") && properties.sneak) {
 			term[0] = "2d6kh";
 			reasons.push(game.i18n.localize("WUTC.DamageReasons.Sneak"));
 		}

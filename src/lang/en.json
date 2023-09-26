@@ -17,6 +17,8 @@
 	"WUTC": {
 		"AC": "AC",
 		"ArmorClass": "Armor Class",
+		"ArmorWardEffect": "Warding Effect",
+		"ArmorWardReminder": "Wardings",
 		"Attributes": {
 			"ac": "Armor Class",
 			"attack": "Attack Bonus",
@@ -40,7 +42,13 @@
 			"Light": "Light",
 			"Medium": "Medium",
 			"Heavy": "Heavy",
-			"Shield": "Shield"
+			"Shield": "Shield",
+			"Ward": "Ward"
+		},
+
+		"Languages": {
+			"Spoken": "Spoken",
+			"Written": "Written"
 		},
 
 		"Weapon": {

@@ -44,10 +44,17 @@
 		{{/if}}
 
 		<div class="tab attributes" data-group="primary" data-tab="attributes">
+			{{#if (eq system.armor.type "ward")}}
+			<div class="form-group">
+				<label>{{ localize "WUTC.ArmorWardEffect"}}</label>
+				<input type="text" name="system.armor.value" value="{{system.armor.value}}" data-dtype="String" />
+			</div>
+			{{else}}
 			<div class="form-group">
 				<label>{{ localize "WUTC.ArmorClass"}}</label>
 				<input type="text" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number" />
 			</div>
+			{{/if}}
 			<div class="form-group">
 				<label>{{ localize "WUTC.Type" }}</label>
 				<select name="system.armor.type">

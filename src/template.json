@@ -35,6 +35,10 @@
 				"attributes": {
 					"attack": {
 						"value": 2
+					},
+					"languages": {
+						"spoken": "",
+						"written": ""
 					}
 				},
 				"characteristics": {

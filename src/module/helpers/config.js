@@ -7,6 +7,7 @@ WUTC.armorTypes = {
 	medium: "WUTC.Armor.Medium",
 	heavy: "WUTC.Armor.Heavy",
 	shield: "WUTC.Armor.Shield",
+	ward: "WUTC.Armor.Ward",
 };
 preLocalize("armorTypes");
 

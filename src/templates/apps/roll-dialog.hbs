@@ -23,7 +23,6 @@
 			<hr />
 		{{/if}}
 		{{#if (eq rollType "attack")}}
-
 			{{#if attribute.targets.length}}
 				<div class="form-group">
 					<label>{{localize "WUTC.Target"}}</label>
@@ -54,6 +53,21 @@
 								{{data.label}}
 							</span>
 							<input style="display: none;" type="checkbox" name="properties.{{key}}" checked />
+						{{/each}}
+					</div>
+				</div>
+			{{/if}}
+		{{/if}}
+		{{#if (eq rollType "save")}}
+			{{#if reminders.length}}
+				<div class="flexcol" style="margin-bottom: 0.5em">
+					<label>{{localize "WUTC.ArmorWardReminder"}}</label>
+					<div>
+						{{#each reminders}}
+							<span class="tag">
+								{{name}}:
+								{{reminder}}
+							</span>
 						{{/each}}
 					</div>
 				</div>

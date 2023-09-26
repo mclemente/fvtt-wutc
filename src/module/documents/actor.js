@@ -111,7 +111,7 @@ export default class ActorWUTC extends Actor {
 				const armor = equip.system.armor;
 				if (!equip.system.equipped || !armorTypes.has(armor?.type)) return obj;
 				if (armor.type === "shield") obj.shields.push(equip);
-				else obj.armors.push(equip);
+				else if (armor.type !== "ward") obj.armors.push(equip);
 				return obj;
 			},
 			{ armors: [], shields: [] },

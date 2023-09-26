@@ -170,6 +170,35 @@
 
 				{{!-- For the main features list, span the right two columns --}}
 				<section class="main grid-span-2">
+					<div class="abilities flexcol" style="margin-bottom: 3px">
+						<h3>Languages</h3>
+						<div class="ability flexrow flex-group-center">
+							<label for="system.details.languages.spoken" class="resource-label align-left"
+								>{{localize "WUTC.Languages.Spoken"}}</label
+							>
+							<input
+								class="flexlarge"
+								style="text-align: left"
+								type="text"
+								name="system.details.languages.spoken"
+								value="{{system.details.languages.spoken}}"
+								data-dtype="String"
+							/>
+						</div>
+						<div class="ability flexrow flex-group-center">
+							<label for="system.details.languages.written" class="resource-label align-left"
+								>{{localize "WUTC.Languages.Written"}}</label
+							>
+							<input
+								class="flexlarge"
+								style="text-align: left"
+								type="text"
+								name="system.details.languages.written"
+								value="{{system.details.languages.written}}"
+								data-dtype="String"
+							/>
+						</div>
+					</div>
 					{{> "systems/wutc/templates/actor/parts/actor-features.html"}}
 				</section>
 			</section>

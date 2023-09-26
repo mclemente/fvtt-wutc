@@ -55,4 +55,38 @@ export default class IntegrationHooks {
 			],
 		});
 	}
+
+	static "polyglot.init"(LanguageProvider) {
+		class WolvesUponTheCoastProvider extends LanguageProvider {
+			get settings() {
+				return {
+					// System has a built-in setting to handle languages.
+					replaceLanguages: {
+						polyglotHide: true,
+						...game.settings.settings.get("polyglot.replaceLanguages"),
+					},
+				};
+			}
+
+			addToConfig() {
+				return;
+			}
+
+			removeFromConfig() {
+				return;
+			}
+
+			getUserLanguages(actor) {
+				let knownLanguages = new Set();
+				let literateLanguages = new Set();
+				const { languages } = actor.system.details || {};
+				if (languages) {
+					for (let lang of languages.spoken.split(/[,;]/)) knownLanguages.add(lang.toLowerCase());
+					for (let lang of languages.written.split(/[,;]/)) literateLanguages.add(lang.toLowerCase());
+				}
+				return [knownLanguages, literateLanguages];
+			}
+		}
+		game.polyglot.api.registerSystem(WolvesUponTheCoastProvider);
+	}
 }
