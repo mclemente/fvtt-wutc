@@ -7,6 +7,22 @@ import { getTargets, getToken } from "../helpers/utils";
  * @extends {Item}
  */
 export default class ItemWUTC extends Item {
+	static getDefaultArtwork(actorData) {
+		if (actorData.type === "equipment") return super.getDefaultArtwork(actorData);
+		const img = {
+			armor: "systems/wutc/assets/icons/svg/armor-vest.svg",
+			weapon: "icons/svg/sword.svg",
+			spell: "systems/wutc/assets/icons/svg/scroll-unfurled.svg",
+			trait: "systems/wutc/assets/icons/svg/skills.svg",
+		};
+		return {
+			img: img[actorData.type],
+			texture: {
+				src: img[actorData.type],
+			},
+		};
+	}
+
 	get hasAttack() {
 		return this.type === "weapon";
 	}
@@ -15,34 +31,10 @@ export default class ItemWUTC extends Item {
 		return this.hasAttack && !!this.system.formula;
 	}
 
-	/**
-	 * Augment the basic Item data model with additional dynamic data.
-	 */
-	prepareData() {
-		// As with the actor class, items are documents that can have their data
-		// preparation methods overridden (such as prepareBaseData()).
-		super.prepareData();
-	}
-
 	prepareDerivedData() {
 		super.prepareDerivedData();
 		if (this.type === "weapon") {
 			this._prepareWeaponFormula();
-		}
-	}
-
-	async _preCreate(data, options, user) {
-		await super._preCreate(data, options, user);
-
-		// Configure prototype token settings
-		if (this.type === "armor") {
-			this.updateSource({ img: "systems/wutc/assets/icons/svg/armor-vest.svg" });
-		} else if (this.type === "weapon") {
-			this.updateSource({ img: "icons/svg/sword.svg" });
-		} else if (this.type === "spell") {
-			this.updateSource({ img: "systems/wutc/assets/icons/svg/scroll-unfurled.svg" });
-		} else if (this.type === "trait") {
-			this.updateSource({ img: "systems/wutc/assets/icons/svg/skills.svg" });
 		}
 	}
 

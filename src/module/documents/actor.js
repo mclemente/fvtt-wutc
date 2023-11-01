@@ -5,29 +5,23 @@ import { RollDialog } from "../apps/RollDialog";
  * @extends {Actor}
  */
 export default class ActorWUTC extends Actor {
-	/** @override */
-	prepareData() {
-		// Prepare data for the actor. Calling the super version of this executes
-		// the following, in order: data reset (to clear active effects),
-		// prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
-		// prepareDerivedData().
-		super.prepareData();
-	}
-
-	/** @override */
-	prepareBaseData() {
-		// Data modifications in this step occur before processing embedded
-		// documents or derived data.
+	static getDefaultArtwork(actorData) {
+		if (actorData.type === "character") return super.getDefaultArtwork(actorData);
+		const img = {
+			npc: "systems/wutc/assets/icons/svg/orc-head.svg",
+			container: "icons/svg/chest.svg",
+			ship: "systems/wutc/assets/icons/svg/sailboat.svg",
+		};
+		return {
+			img: img[actorData.type],
+			texture: {
+				src: img[actorData.type],
+			},
+		};
 	}
 
 	/**
 	 * @override
-	 * Augment the basic actor data with additional dynamic data. Typically,
-	 * you'll want to handle most of your calculated/derived data in this step.
-	 * Data calculated in this step should generally not exist in template.json
-	 * (such as ability modifiers rather than ability scores) and should be
-	 * available both inside and outside of character sheets (such as if an actor
-	 * is queried and has a roll executed directly from it).
 	 */
 	prepareDerivedData() {
 		this._prepareCharacterData();
@@ -46,35 +40,12 @@ export default class ActorWUTC extends Actor {
 
 		// Configure prototype token settings
 		const changes = {};
-		const prototypeToken = {};
 		if (this.type === "character") {
-			Object.assign(prototypeToken, {
+			changes.prototypeToken = {
 				sight: { enabled: true },
 				actorLink: true,
 				disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
-			});
-			changes.prototypeToken = prototypeToken;
-		} else if (this.type === "npc") {
-			const img = "systems/wutc/assets/icons/svg/orc-head.svg";
-			Object.assign(prototypeToken, {
-				texture: { src: img },
-			});
-			changes.prototypeToken = prototypeToken;
-			changes.img = img;
-		} else if (this.type === "container") {
-			const img = "icons/svg/chest.svg";
-			Object.assign(prototypeToken, {
-				texture: { src: img },
-			});
-			changes.prototypeToken = prototypeToken;
-			changes.img = img;
-		} else if (this.type === "ship") {
-			const img = "systems/wutc/assets/icons/svg/sailboat.svg";
-			Object.assign(prototypeToken, {
-				texture: { src: img },
-			});
-			changes.prototypeToken = prototypeToken;
-			changes.img = img;
+			};
 		}
 		this.updateSource(changes);
 	}
