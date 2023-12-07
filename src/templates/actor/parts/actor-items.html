@@ -49,8 +49,15 @@
 	<div>Encumbrance:</div>
 	<div class="encumbrance-list">
 		{{#times system.attributes.encumbrance.value}}
-		<i class="fas fa-circle"></i>
-		{{/times}} {{#times system.attributes.encumbrance.diff}}
+		<i
+			style="
+			{{#if (gte @index ../system.attributes.encumbrance.max)}}
+			color: red;
+			{{/if}}
+			"
+			class="fas fa-circle"></i>
+		{{/times}}
+		{{#times system.attributes.encumbrance.diff}}
 		<i class="far fa-circle"></i>
 		{{/times}}
 	</div>

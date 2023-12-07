@@ -79,9 +79,18 @@ Hooks.once("i18nInit", () => utils.performPreLocalization(CONFIG.WUTC));
 /* -------------------------------------------- */
 
 // If you need to add Handlebars helpers, here are a few useful examples:
-Handlebars.registerHelper("times", function (n, block) {
+Handlebars.registerHelper("times", function (n, options) {
 	let accum = "";
-	for (let i = 0; i < n; ++i) accum += block.fn(i);
+	let data;
+	if (options.data) {
+		data = Handlebars.createFrame(options.data);
+	}
+	for (let i = 0; i < n; ++i) {
+		if (data) {
+			data.index = i;
+		}
+		accum += options.fn(i, { data: data });
+	}
 	return accum;
 });
 
