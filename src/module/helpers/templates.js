@@ -15,6 +15,8 @@ export const preloadHandlebarsTemplates = async function () {
 		// Item partials.
 		"systems/wutc/templates/item/parts/item-notes.html",
 
+		// Apps
+		"systems/wutc/templates/apps/item-card.hbs",
 		"systems/wutc/templates/apps/roll-dialog.hbs",
 
 		// Sidebar

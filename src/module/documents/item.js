@@ -78,23 +78,9 @@ export default class ItemWUTC extends Item {
 	 * @param {Event} event   The originating click event
 	 * @private
 	 */
-	async roll(event) {
-		const item = this;
-
-		// Initialize chat data.
-		const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-		const rollMode = game.settings.get("core", "rollMode");
-		const label = `[${item.type}] ${item.name}`;
-
+	async roll(event = {}, options = {}) {
 		// If there's no roll data, send a chat message.
-		if (!this.system.formula) {
-			ChatMessage.create({
-				speaker: speaker,
-				rollMode: rollMode,
-				flavor: label,
-				content: item.system.description ?? "",
-			});
-		}
+		if (!this.system.formula) return this.displayCard(options);
 		// Otherwise, create a roll and send a chat message from it.
 		else {
 			let title = game.i18n.format(`WUTC.AttackWithWeapon`, { weapon: this.name }) ?? "";
@@ -138,6 +124,48 @@ export default class ItemWUTC extends Item {
 				event,
 			});
 		}
+	}
+
+	async displayCard(options = {}) {
+		const token = this.actor.token;
+		const templateData = {
+			actor: this.actor,
+			tokenId: token?.uuid || null,
+			item: this,
+			data: await this.getChatData(),
+		};
+		const html = await renderTemplate("systems/wutc/templates/chat/item-card.hbs", templateData);
+
+		// Create the ChatMessage data object
+		const chatData = {
+			user: game.user.id,
+			type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+			content: html,
+			flavor: this.system.chatFlavor || this.name,
+			speaker: ChatMessage.getSpeaker({ actor: this.actor, token }),
+			flags: { "core.canPopout": true },
+		};
+
+		// Apply the roll mode to adjust message visibility
+		ChatMessage.applyRollMode(chatData, options.rollMode ?? game.settings.get("core", "rollMode"));
+
+		// Create the Chat Message or return its data
+		const card = options.createMessage !== false ? await ChatMessage.create(chatData) : chatData;
+		return card;
+	}
+
+	async getChatData(htmlOptions = {}) {
+		const data = this.toObject().system;
+
+		// Rich text description
+		data.description = await TextEditor.enrichHTML(data.description, {
+			async: true,
+			relativeTo: this,
+			rollData: this.getRollData(),
+			...htmlOptions,
+		});
+
+		return data;
 	}
 
 	/* -------------------------------------------- */
