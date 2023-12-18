@@ -46,6 +46,7 @@ export class ItemSheetWUTC extends ItemSheet {
 		context.system = itemData.system;
 		context.flags = itemData.flags;
 		context.config = CONFIG.WUTC;
+		context.isGM = game.user.isGM;
 
 		return context;
 	}

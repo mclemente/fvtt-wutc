@@ -29,7 +29,7 @@
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
 		<a class="item" data-tab="description">{{localize "WUTC.Description"}}</a>
-		{{#if isGM}}<a class="item" data-tab="notes">GM Notes</a>{{/if}}
+		<a class="item" data-tab="notes">Notes</a>
 		<a class="item" data-tab="attributes">Attributes</a>
 	</nav>
 
@@ -57,12 +57,9 @@
 			</section>
 		</div>
 
-		{{#if isGM}}
 		<div class="tab notes" data-group="primary" data-tab="notes">
-			{{editor system.gmNotes target="system.gmNotes" rollData=rollData button=true owner=owner
-			editable=editable}}
+			{{> "systems/wutc/templates/item/parts/item-notes.html"}}
 		</div>
-		{{/if}}
 
 		{{!-- Attributes Tab --}}
 		<div class="tab attributes" data-group="primary" data-tab="attributes">
