@@ -76,7 +76,8 @@
 			"attributes": {
 				"numOfAttacks": {
 					"value": 1
-				}
+				},
+				"supernatural": false
 			},
 			"follower": {
 				"leader": ""

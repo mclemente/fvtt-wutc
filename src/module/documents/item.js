@@ -237,7 +237,11 @@ export default class ItemWUTC extends Item {
 				const token = getToken(tokenData.id);
 				if (token) {
 					const hp = token.actor.system.attributes.hp.value;
-					await token.actor.update({ "system.attributes.hp.value": hp - damage });
+					let finalDamage = damage;
+					if (token.actor.system.attributes.supernatural) {
+						finalDamage = Math.floor(finalDamage / 6);
+					}
+					await token.actor.update({ "system.attributes.hp.value": hp - finalDamage });
 				}
 			}
 		}

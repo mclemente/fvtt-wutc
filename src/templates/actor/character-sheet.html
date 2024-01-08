@@ -6,7 +6,7 @@
 			<h1 class="charname">
 				<input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'Name' }}" />
 			</h1>
-			<div class="resources grid grid-2col">
+			<div class="resources grid {{#if isNpc}}grid-3col{{else}}grid-2col{{/if}}">
 				<div class="resource flex-group-center">
 					<label for="system.attributes.hp.value" class="resource-label">Hit Points</label>
 					<div class="resource-content flexrow flex-center flex-between">
@@ -37,6 +37,15 @@
 						/>
 					</div>
 				</div>
+
+				{{#if isNpc}}
+				<div class="resource flex-group-center" style="align-self: center;">
+					<div class="resource-content flexrow flex-center flex-between">
+						<input type="checkbox" name="system.attributes.supernatural" {{checked system.attributes.supernatural}} />
+						<label for="system.attributes.supernatural" class="resource-label" style="align-self: center;">Supernatural</label>
+					</div>
+				</div>
+				{{/if}}
 			</div>
 		</div>
 	</header>
