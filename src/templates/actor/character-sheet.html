@@ -133,18 +133,12 @@
 							<label for="system.attributes.attack.value" class="resource-label flexlarge align-left">
 								{{localize "WUTC.Attributes.attack"}}
 							</label>
-							{{#if (eq actor.type "character")}}
-							<span class="ability-mod rollable"
-								>{{numberFormat system.attributes.attack.value sign=true}}</span
-							>
-							{{else}}
 							<input
 								type="text"
 								name="system.attributes.attack.value"
 								value="{{system.attributes.attack.value}}"
 								data-dtype="Number"
 							/>
-							{{/if}}
 						</div>
 						{{#if (eq actor.type "npc")}}
 						<div class="ability flexrow flex-group-center">
