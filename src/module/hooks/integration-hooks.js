@@ -68,14 +68,6 @@ export default class IntegrationHooks {
 				};
 			}
 
-			addToConfig() {
-				return;
-			}
-
-			removeFromConfig() {
-				return;
-			}
-
 			getUserLanguages(actor) {
 				let knownLanguages = new Set();
 				let literateLanguages = new Set();
