@@ -73,16 +73,6 @@ export class ActorSheetWUTC extends ActorSheet {
 	 *
 	 * @return {undefined}
 	 */
-	// eslint-disable-next-line no-unused-vars
-	_prepareCharacterData(context) {}
-
-	/**
-	 * Organize and classify Items for Character sheets.
-	 *
-	 * @param {Object} actorData The actor to prepare.
-	 *
-	 * @return {undefined}
-	 */
 	_prepareItems(context) {
 		// Initialize containers.
 		const gear = {
