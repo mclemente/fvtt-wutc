@@ -24,9 +24,6 @@ export default class ActorWUTC extends Actor {
 	 * @override
 	 */
 	prepareDerivedData() {
-		this._prepareCharacterData();
-		this._prepareNpcData();
-
 		if (["character", "npc"].includes(this.type)) {
 			this._prepareArmorClass();
 		}
@@ -48,25 +45,6 @@ export default class ActorWUTC extends Actor {
 			};
 		}
 		this.updateSource(changes);
-	}
-
-	/**
-	 * Prepare Character type specific data
-	 */
-	_prepareCharacterData() {
-		if (this.type !== "character") return;
-		const attack = this.system.attributes.attack;
-		if (!attack) return;
-		if (this.system.characteristics.str.value >= 15) {
-			attack.value += 1;
-		}
-	}
-
-	/**
-	 * Prepare NPC type specific data.
-	 */
-	_prepareNpcData() {
-		if (this.type !== "npc") return;
 	}
 
 	_prepareArmorClass() {
