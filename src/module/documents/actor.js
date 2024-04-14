@@ -168,7 +168,6 @@ export default class ActorWUTC extends Actor {
 
 		// Prepare character roll data.
 		this._getCharacterRollData(data);
-		this._getNpcRollData(data);
 
 		return data;
 	}
@@ -183,16 +182,6 @@ export default class ActorWUTC extends Actor {
 		if (data.attributes.hd) {
 			data.lvl = data.attributes.hd.value ?? 1;
 		}
-	}
-
-	/**
-	 * Prepare NPC roll data.
-	 */
-	// eslint-disable-next-line no-unused-vars
-	_getNpcRollData(data) {
-		if (this.type !== "npc") return;
-
-		// Process additional NPC data here.
 	}
 
 	async rollTest(key, event) {
