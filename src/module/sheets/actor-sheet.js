@@ -47,9 +47,6 @@ export class ActorSheetWUTC extends ActorSheet {
 
 		// Prepare character data and items.
 		this._prepareItems(context);
-		if (actorData.type == "character") {
-			this._prepareCharacterData(context);
-		}
 
 		// Prepare NPC data and items.
 		// if (actorData.type == "npc") {
