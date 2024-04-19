@@ -134,7 +134,7 @@ export default class ItemWUTC extends Item {
 			item: this,
 			data: await this.getChatData(),
 		};
-		const html = await renderTemplate("systems/wutc/templates/chat/item-card.hbs", templateData);
+		const html = await renderTemplate("systems/wutc/templates/apps/item-card.hbs", templateData);
 
 		// Create the ChatMessage data object
 		const chatData = {
