@@ -7,7 +7,7 @@ import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/
 export class ActorSheetWUTC extends ActorSheet {
 	/** @override */
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ["wutc", "sheet", "actor"],
 			width: 600,
 			height: 600,
@@ -200,7 +200,7 @@ export class ActorSheetWUTC extends ActorSheet {
 		// Get the type of item to create.
 		const type = header.dataset.type;
 		// Grab any data associated with this control.
-		const data = duplicate(header.dataset);
+		const data = foundry.utils.duplicate(header.dataset);
 		// Initialize a default name.
 		const name = game.i18n.format("WUTC.NewItem", {
 			new: game.i18n.localize("WUTC.New"),

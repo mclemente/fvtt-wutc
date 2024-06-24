@@ -43,7 +43,7 @@ export class RollDialog extends BaseRollDialog {
 				}
 			}
 		}
-		attribute = mergeObject({ bonus: 0, penalty: 0 }, attribute);
+		attribute = foundry.utils.mergeObject({ bonus: 0, penalty: 0 }, attribute);
 		return {
 			attribute,
 			reminders,
@@ -197,7 +197,7 @@ export class AttackDialog extends BaseRollDialog {
 		}
 
 		const item = this.object.actor;
-		let flags = mergeObject(data.flags, {
+		let flags = foundry.utils.mergeObject(data.flags, {
 			wutc: {
 				roll: {
 					itemId: item.id,

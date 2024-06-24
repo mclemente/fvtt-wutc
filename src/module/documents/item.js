@@ -107,8 +107,8 @@ export default class ItemWUTC extends Item {
 				if (target?.id) {
 					flags.wutc.target = target.id;
 				}
-				mergeObject(flags, data.flags);
 				const roll = await new RollWUTC(term, data, {}).evaluate({ async: true });
+				foundry.utils.mergeObject(flags, data.flags);
 
 				return roll.toMessage({
 					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
