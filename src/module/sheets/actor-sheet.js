@@ -216,7 +216,7 @@ export class ActorSheetWUTC extends ActorSheet {
 		delete itemData.system["type"];
 
 		// Finally, create the item!
-		return await Item.create(itemData, { parent: this.actor });
+		return await Item.create(itemData, { parent: this.actor, renderSheet: true });
 	}
 
 	_onMoraleCheck(event) {
