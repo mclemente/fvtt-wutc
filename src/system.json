@@ -8,16 +8,12 @@
 			"discord": "mclemente#5524"
 		}
 	],
-	"url": "This is auto replaced",
-	"license": "MIT",
-	"version": "This is auto replaced",
 	"compatibility": {
 		"minimum": "11",
 		"verified": "11"
 	},
 	"esmodules": ["module/wutc.js"],
 	"styles": ["styles/wutc.css"],
-	"packs": [],
 	"languages": [
 		{
 			"lang": "en",
@@ -25,15 +21,12 @@
 			"path": "lang/en.json"
 		}
 	],
-	"relationships": {
-		"requires": [],
-		"conflicts": []
-	},
-	"manifest": "This is auto replaced",
-	"download": "This is auto replaced",
 	"initiative": "1d10 - @attributes.ac.value",
 	"gridDistance": 1,
 	"gridUnits": "sq",
 	"primaryTokenAttribute": "attributes.hp",
-	"secondaryTokenAttribute": "<optionally the attribute to use as secondary resource in tokens by default>"
+	"url": "This is auto replaced",
+	"version": "This is auto replaced",
+	"manifest": "This is auto replaced",
+	"download": "This is auto replaced"
 }
