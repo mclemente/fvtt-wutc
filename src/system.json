@@ -10,7 +10,7 @@
 	],
 	"compatibility": {
 		"minimum": "11",
-		"verified": "11"
+		"verified": "12"
 	},
 	"esmodules": ["module/wutc.js"],
 	"styles": ["styles/wutc.css"],
