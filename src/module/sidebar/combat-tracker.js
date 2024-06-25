@@ -10,7 +10,7 @@ export default class CombatTrackerWUTC extends CombatTracker {
 		for (const turn of data.turns) {
 			const combatant = this.viewed?.combatants.get(turn.id, { strict: true });
 			foundry.utils.mergeObject(turn, {
-				type: combatant?.actor.type,
+				type: combatant?.actor?.type,
 			});
 		}
 		return data;
