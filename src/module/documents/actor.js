@@ -115,7 +115,7 @@ export default class ActorWUTC extends Actor {
 				else {
 					if (Number.isNumeric(equip.system.weight)) {
 						if (equip.system.weight !== 0) {
-							obj.total += Math.ceil(equip.system.quantity * equip.system.weight);
+							obj.total += equip.system.quantity * equip.system.weight;
 						}
 					} else {
 						obj.total += equip.system.quantity ?? 1;
@@ -125,7 +125,7 @@ export default class ActorWUTC extends Actor {
 			},
 			{ total: 0 },
 		);
-		encumbrance.value = total;
+		encumbrance.value = Math.floor(total);
 		const ac = this.system.attributes.ac;
 		if (ac && this.type !== "ship") {
 			encumbrance.max = ac.value + 5;
