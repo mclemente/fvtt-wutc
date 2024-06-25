@@ -163,6 +163,7 @@
 		},
 
 		"Combat": {
+			"ExcludingFromInitiative": "Excluding {type} {actor} from initiative.",
 			"RollUnder": "Rolled Under",
 			"RollOver": "Rolled Over",
 			"NPC": "NPC"

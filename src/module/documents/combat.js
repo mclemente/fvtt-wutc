@@ -63,6 +63,31 @@ export default class CombatWUTC extends Combat {
 		await ChatMessage.implementation.create(messages);
 		return this;
 	}
+
+	async createEmbeddedDocuments(embeddedName, data = [], context = {}) {
+		const createData = data.filter((datum) => {
+			const token = canvas.tokens.placeables.find((canvasToken) => canvasToken.id === datum.tokenId);
+			if (!token) return false;
+
+			const { actor } = token;
+			if (!actor) {
+				ui.notifications.warn(`${token.name} has no associated actor.`);
+				return false;
+			}
+
+			if (actor.type === "container") {
+				const type = game.i18n.localize(`TYPES.Actor.${actor.type}`);
+				ui.notifications.info(
+					game.i18n.format("WUTC.Combat.ExcludingFromInitiative", { type, actor: actor.name }),
+				);
+				return false;
+			}
+			return true;
+		});
+
+		return super.createEmbeddedDocuments(embeddedName, createData, context);
+	}
+
 	_sortCombatants(a, b) {
 		const initA = Number.isNumeric(a.initiative) ? a.initiative : Infinity;
 		const initB = Number.isNumeric(b.initiative) ? b.initiative : Infinity;
