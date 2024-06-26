@@ -11,14 +11,14 @@
 					<label for="system.attributes.hp.value" class="resource-label">Hit Points</label>
 					<div class="resource-content flexrow flex-center flex-between">
 						<input
-							type="text"
+							type="number"
 							name="system.attributes.hp.value"
 							value="{{system.attributes.hp.value}}"
 							data-dtype="Number"
 						/>
 						<span> / </span>
 						<input
-							type="text"
+							type="number"
 							name="system.attributes.hp.max"
 							value="{{system.attributes.hp.max}}"
 							data-dtype="Number"
@@ -30,7 +30,7 @@
 					<label for="system.attributes.hd.value" class="resource-label">Hit Dice</label>
 					<div class="resource-content flexrow flex-center flex-between">
 						<input
-							type="text"
+							type="number"
 							name="system.attributes.hd.value"
 							value="{{system.attributes.hd.value}}"
 							data-dtype="Number"
@@ -80,7 +80,7 @@
 								>{{localize (concat "WUTC.Characteristics." key)}}</label
 							>
 							<input
-								type="text"
+								type="number"
 								name="system.characteristics.{{key}}.value"
 								value="{{ability.value}}"
 								data-dtype="Number"
@@ -103,7 +103,7 @@
 							<span class="ability-mod rollable">{{ability.value}}</span>
 							{{else}}
 							<input
-								type="text"
+								type="number"
 								name="system.saves.{{key}}.value"
 								value="{{ability.value}}"
 								data-dtype="Number"
@@ -122,7 +122,7 @@
 							<span class="ability-mod">{{numberFormat system.attributes.ac.value}}</span>
 							{{else}}
 							<input
-								type="text"
+								type="number"
 								name="system.attributes.ac.value"
 								value="{{system.attributes.ac.value}}"
 								data-dtype="Number"
@@ -134,7 +134,7 @@
 								{{localize "WUTC.Attributes.attack"}}
 							</label>
 							<input
-								type="text"
+								type="number"
 								name="system.attributes.attack.value"
 								value="{{system.attributes.attack.value}}"
 								data-dtype="Number"
@@ -148,7 +148,7 @@
 								>{{localize "WUTC.Attributes.numOfAttacks"}}</label
 							>
 							<input
-								type="text"
+								type="number"
 								name="system.attributes.numOfAttacks.value"
 								value="{{system.attributes.numOfAttacks.value}}"
 								data-dtype="Number"
