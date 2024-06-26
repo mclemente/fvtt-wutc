@@ -93,7 +93,12 @@ export default class ActorWUTC extends Actor {
 			ac.equippedShield = shields[0];
 		}
 
-		if (this.type !== "npc") {
+		if (this.type === "npc") {
+			if (ac.value !== null) ac.calc = "flat";
+			else ac.calc = "default";
+		}
+
+		if (ac.calc === "default") {
 			const rollData = this.getRollData({ deterministic: true });
 			rollData.attributes.ac = ac;
 			const formula = "@attributes.ac.armor + @attributes.ac.bonus + @attributes.ac.penalty";
